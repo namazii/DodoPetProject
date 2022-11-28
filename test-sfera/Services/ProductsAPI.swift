@@ -28,19 +28,4 @@ class ProductsAPI {
             }
             return response
     }
-    
-//    func fetchMenu(filename fileName: String) -> ProductsResponse? {
-//        if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
-//            do {
-//                let data = try Data(contentsOf: url)
-//                let decoder = JSONDecoder()
-//                let jsonResponse = try decoder.decode(ProductsResponse.self, from: data)
-//                return jsonResponse
-//            } catch {
-//                print("error:\(error)")
-//            }
-//        }
-//        return nil
-//    }
-    
 }
