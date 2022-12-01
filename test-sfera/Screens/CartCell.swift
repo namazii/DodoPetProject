@@ -8,9 +8,17 @@
 import UIKit
 import SnapKit
 
+protocol CartCellDelegate: AnyObject {
+    func cartCell(counter: Int, product: Product)
+}
+
 class CartCell: UITableViewCell {
     
     static let reuseID = "CartCell"
+    
+    weak var delegate: CartCellDelegate?
+    
+    var product: Product?
     
     private let productImageView: UIImageView = {
         let image = UIImageView()
@@ -78,6 +86,8 @@ class CartCell: UITableViewCell {
         stackViewMain.addArrangedSubview(headLabel)
         stackViewMain.addArrangedSubview(infoLabel)
         stackViewMain.addArrangedSubview(steperView)
+        
+        steperView.delegate = self
     }
     
     private func setupConstraints() {
@@ -97,12 +107,26 @@ class CartCell: UITableViewCell {
         
         steperView.snp.makeConstraints { make in
             make.height.equalToSuperview().multipliedBy(0.25)
+            make.width.equalToSuperview().multipliedBy(0.60)
         }
     }
     
     func configure(model: Product) {
+        self.product = model
         productImageView.image = UIImage(named: model.image)
         headLabel.text = model.name
         infoLabel.text = model.itemDescription
+        steperView.steperCounter = model.items
     }
+}
+
+extension CartCell: CartSteperViewDelegate {
+    
+    func carStepperView(_ stepperCounter: Int) {
+        if let product = product {
+            delegate?.cartCell(counter: stepperCounter, product: product)
+        }
+        
+    }
+    
 }

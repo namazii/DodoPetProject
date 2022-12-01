@@ -8,17 +8,19 @@
 import UIKit
 import SnapKit
 
-protocol CartSteperDelegateProtocol: AnyObject {
-    var steperCounter: Int {get set}
+protocol CartSteperViewDelegate: AnyObject {
+    func carStepperView(_ stepperCounter: Int )
 }
 
 class CartSteperView: UIView {
     
     var steperCounter = 1 {
         didSet {
-            chaingLabel()
+            countLabel.text = String(steperCounter)
         }
     }
+    
+    weak var delegate: CartSteperViewDelegate?
     
     private lazy var countLabel: UILabel = {
         let label = UILabel()
@@ -35,6 +37,7 @@ class CartSteperView: UIView {
        let button = UIButton()
         
         button.setImage(UIImage(systemName: "plus"), for: .normal)
+        button.tintColor = #colorLiteral(red: 0.5255012512, green: 0.5412146449, blue: 0.5883281827, alpha: 1)
         button.addTarget(self, action: #selector(didTapSteperButton), for: .touchUpInside)
         
         return button
@@ -44,6 +47,7 @@ class CartSteperView: UIView {
        let button = UIButton()
         
         button.setImage(UIImage(systemName: "minus"), for: .normal)
+        button.tintColor = #colorLiteral(red: 0.5255012512, green: 0.5412146449, blue: 0.5883281827, alpha: 1)
         button.addTarget(self, action: #selector(didTapSteperButton), for: .touchUpInside)
         
         return button
@@ -55,7 +59,7 @@ class CartSteperView: UIView {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.distribution = .fillEqually
+        stackView.distribution = .equalCentering
         stackView.spacing = 15
         
         return stackView
@@ -64,7 +68,7 @@ class CartSteperView: UIView {
     private let steperBackView: UIView = {
         let backView = UIView()
         
-        backView.backgroundColor = .red
+        backView.backgroundColor = #colorLiteral(red: 0.964720428, green: 0.964720428, blue: 0.9843518138, alpha: 1)
         
         return backView
     }()
@@ -82,13 +86,7 @@ class CartSteperView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        steperBackView.layer.cornerRadius = self.bounds.height / 3
-        
-    }
-    
-    private func chaingLabel() {
-        countLabel.text = String(steperCounter)
+        steperBackView.layer.cornerRadius = self.bounds.height / 2
     }
     
     private func setupViews() {
@@ -106,16 +104,9 @@ class CartSteperView: UIView {
         }
         
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
-        
-        increaseButton.snp.makeConstraints { make in
-            make.left.equalTo(stackView.snp.left).inset(10)
-//            make.width.e
-        }
-        
-        decreaseButton.snp.makeConstraints { make in
-            make.right.equalTo(stackView.snp.right).inset(10)
+            make.top.bottom.equalToSuperview()
+            make.left.equalTo(steperBackView.snp.left).inset(20)
+            make.right.equalTo(steperBackView.snp.right).inset(20)
         }
     }
     
@@ -124,9 +115,11 @@ class CartSteperView: UIView {
         switch button {
         case increaseButton:
             steperCounter += 1
+            delegate?.carStepperView(steperCounter)
         default:
             if steperCounter != 0 {
                 steperCounter -= 1
+                delegate?.carStepperView(steperCounter)
             }
         }
     }

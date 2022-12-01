@@ -13,9 +13,10 @@ protocol DetailProductViewInputProtocol: AnyObject {
 }
 
 protocol DetailProductViewOutputProtocol {
-    init(view: DetailProductViewInputProtocol)
+//    init(view: DetailProductViewInputProtocol)
     func loadView()
     var product: Product? {get set}
+    func addToCart()
 }
 
 class DetailProductViewController: UIViewController {
@@ -91,8 +92,7 @@ class DetailProductViewController: UIViewController {
     
     //MARK: - Actions
     @objc private func addOrder() {
-        guard let product = presenter?.product else { return }
-        CartService.shared.addProduct(model: product)
+        presenter?.addToCart()
         presentingViewController?.dismiss(animated: true)
     }
     

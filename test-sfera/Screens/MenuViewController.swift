@@ -13,7 +13,7 @@ protocol MenuViewInputProtocol: AnyObject {
 }
 
 protocol MenuViewOutputProtocol {
-    init(view: MenuViewInputProtocol)
+    //init(view: MenuViewInputProtocol,)
     func loadView()
     func didTapShowProductDetailCell(_ product: Product)
     func didTapCity()

@@ -15,8 +15,41 @@ class CartService {
     var order: Order?
     
     func addProduct(model: Product) {
-        products.append(model)
-        print(products)
+        print("addProduct")
+        print(model)
+        
+        
+        if products.isEmpty {
+            products.append(model)
+            return
+        }
+        
+        //Index - get element, write element
+        let productIndex = products.firstIndex(where: { $0.id == model.id })
+        
+        if productIndex == nil {
+            products.insert(model, at: 0)
+            return
+        }
+        
+        if let productIndex = productIndex {
+            
+            products[productIndex].items += 1
+            print(products)
+            
+            //let productInCart = products[productIndex]
+            return
+        }
+    }
+    
+    func updateProducts(model: [Product]) {
+        var productArray: [Product] = []
+        for i in model {
+            if i.items != 0 {
+                productArray.append(i)
+            }
+        }
+        self.products = productArray
     }
     
     func deleteProduct(model: Product) {

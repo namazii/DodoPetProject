@@ -17,7 +17,7 @@ enum NetworkError: Error {
 class ProductsAPI {
     
     func fetchCollection() async throws -> ProductsResponse {
-            guard let url = URL(string: "https://run.mocky.io/v3/2ec57004-4ce5-4d90-937f-5112eea7ee17")
+            guard let url = URL(string: "https://run.mocky.io/v3/f04ed268-416d-4cdf-812d-ab8a8a148d67")
             else {
                 throw NetworkError.invalidURL
             }
@@ -28,19 +28,4 @@ class ProductsAPI {
             }
             return response
     }
-    
-//    func fetchMenu(filename fileName: String) -> ProductsResponse? {
-//        if let url = Bundle.main.url(forResource: fileName, withExtension: "json") {
-//            do {
-//                let data = try Data(contentsOf: url)
-//                let decoder = JSONDecoder()
-//                let jsonResponse = try decoder.decode(ProductsResponse.self, from: data)
-//                return jsonResponse
-//            } catch {
-//                print("error:\(error)")
-//            }
-//        }
-//        return nil
-//    }
-    
 }

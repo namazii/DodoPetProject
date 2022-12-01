@@ -52,6 +52,7 @@
 		BC5F4D722933D9FC00D29F62 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5F4D712933D9FC00D29F62 /* UIView+Extension.swift */; };
 		BC5F4D742933DA1000D29F62 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5F4D732933DA1000D29F62 /* UILabel+Extension.swift */; };
 		BC5F4D772933DA4E00D29F62 /* ScreenRoutable.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5F4D762933DA4E00D29F62 /* ScreenRoutable.swift */; };
+		BCC96106293915CD00B94161 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCC96105293915CD00B94161 /* UIColor+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -101,6 +102,7 @@
 		BC5F4D712933D9FC00D29F62 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		BC5F4D732933DA1000D29F62 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		BC5F4D762933DA4E00D29F62 /* ScreenRoutable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenRoutable.swift; sourceTree = "<group>"; };
+		BCC96105293915CD00B94161 /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -299,6 +301,7 @@
 			children = (
 				BC5F4D712933D9FC00D29F62 /* UIView+Extension.swift */,
 				BC5F4D732933DA1000D29F62 /* UILabel+Extension.swift */,
+				BCC96105293915CD00B94161 /* UIColor+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -406,6 +409,7 @@
 				BC5F4D572933D84300D29F62 /* CartCell.swift in Sources */,
 				BC1D50E82934D99E003A11E1 /* CartSteperView.swift in Sources */,
 				BC5F4D612933D89200D29F62 /* CartAssembly.swift in Sources */,
+				BCC96106293915CD00B94161 /* UIColor+Extension.swift in Sources */,
 				BC5F4D182933D07E00D29F62 /* MainTabVC.swift in Sources */,
 				BC5F4D482933D69900D29F62 /* DetailProductPresenter.swift in Sources */,
 				BC5F4D412933D61600D29F62 /* BannersCell.swift in Sources */,
@@ -576,6 +580,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -609,6 +614,7 @@
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
