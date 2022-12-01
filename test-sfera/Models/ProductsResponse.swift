@@ -13,6 +13,8 @@ struct ProductsResponse: Codable {
     let categories, banners: [String]
 }
 
+
+#warning("Change items to count in product")
 // MARK: - Product
 struct Product: Codable {
     let id: Int

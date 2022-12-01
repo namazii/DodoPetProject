@@ -17,7 +17,7 @@ enum NetworkError: Error {
 class ProductsAPI {
     
     func fetchCollection() async throws -> ProductsResponse {
-            guard let url = URL(string: "https://run.mocky.io/v3/2ec57004-4ce5-4d90-937f-5112eea7ee17")
+            guard let url = URL(string: "https://run.mocky.io/v3/f04ed268-416d-4cdf-812d-ab8a8a148d67")
             else {
                 throw NetworkError.invalidURL
             }
