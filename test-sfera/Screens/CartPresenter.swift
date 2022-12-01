@@ -8,6 +8,7 @@
 import Foundation
 
 class CartPresenter: CartViewOutputProtocol {
+    
     func didTapShowProductDetailCell() {
         //
     }
@@ -16,10 +17,14 @@ class CartPresenter: CartViewOutputProtocol {
     
     var interactor: CartInteractorInputProtocol?
     
-    var products: [Product] = []
+    var products: [Product] = [] 
     
-    required init(view: CartViewInputProtocol) {
+    init(view: CartViewInputProtocol) {
         self.view = view
+    }
+    
+    func updateProducts() {
+        CartService.shared.updateProducts(model: products)
     }
     
     func getCart() {

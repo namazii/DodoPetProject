@@ -14,9 +14,11 @@ protocol MenuAssemblyInputProtocol {
 class MenuAssembly: MenuAssemblyInputProtocol {
     
     func configure(withView view: MenuViewController) {
-        let presenter = MenuPresenter(view: view)
-        let interactor = MenuInteractor(presenter: presenter)
+        
         let router = MenuRouter()
+        
+        let presenter = MenuPresenter.init(view: view, router: router)
+        let interactor = MenuInteractor(presenter: presenter)
         
         view.presenter = presenter
         presenter.interactor = interactor

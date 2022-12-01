@@ -10,13 +10,14 @@ import Foundation
 class MenuPresenter: MenuViewOutputProtocol {
     unowned private let view: MenuViewInputProtocol
     
-    var router: MenuRouter?
+    var router: MenuRouter
     var interactor: MenuInteractorInputProtocol?
     
     var products: [Product] = []
     
-    required init(view: MenuViewInputProtocol) {
+    init(view: MenuViewInputProtocol, router: MenuRouter) {
         self.view = view
+        self.router = router
     }
     
     func didTapCity() {
@@ -25,13 +26,12 @@ class MenuPresenter: MenuViewOutputProtocol {
     
     func fetchCategories() -> [String] {
         var category: Set<String> = []
-        print(products)
         for product in products {
             category.insert(product.category)
         }
         
         let arr = [String](category).sorted(by: >)
-        print(arr)
+        
         return arr
     }
     
@@ -40,7 +40,7 @@ class MenuPresenter: MenuViewOutputProtocol {
     }
     
     func didTapShowProductDetailCell(_ product: Product) {
-        router?.showProductDetail(product: product)
+        router.showProductDetail(product: product)
     }
 }
 

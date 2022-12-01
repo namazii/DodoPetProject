@@ -85,7 +85,7 @@ class ProductCell: UITableViewCell {
         
         headLabel.font = .systemFont(ofSize: contentView.frame.height / 8.4)
         infoLabel.font = .systemFont(ofSize: contentView.frame.height / 11)
-        priceButton.layer.cornerRadius = contentView.frame.height / 16
+        priceButton.layer.cornerRadius = priceButton.frame.height / 2
     }
     
     //MARK: - Private Methods
@@ -110,7 +110,7 @@ class ProductCell: UITableViewCell {
         }
         
         priceButton.snp.makeConstraints { make in
-            make.height.equalTo(stackViewMain.snp.height).multipliedBy(0.15)
+            make.height.equalTo(stackViewMain.snp.height).multipliedBy(0.2)
         }
         
         headLabel.snp.makeConstraints { make in

@@ -13,7 +13,7 @@ protocol CityPopOverViewInputProtocol: AnyObject {
 }
 
 protocol CityPopOverViewOutputProtocol {
-    init(view: CityPopOverViewInputProtocol)
+//    init(view: CityPopOverViewInputProtocol)
     func loadView()
     var cities: [String] {get set}
 }

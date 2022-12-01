@@ -16,7 +16,7 @@ class CityPopOverPresenter: CityPopOverViewOutputProtocol {
     var cities: [String] = []
     
     
-    required init(view: CityPopOverViewInputProtocol) {
+    init(view: CityPopOverViewInputProtocol) {
         self.view = view
     }
     

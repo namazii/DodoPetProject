@@ -21,8 +21,13 @@ class DetailProductPresenter: DetailProductViewOutputProtocol {
     
     var product: Product?
     
-    required init(view: DetailProductViewInputProtocol) {
+    init(view: DetailProductViewInputProtocol) {
         self.view = view
+    }
+    
+    func addToCart() {
+        guard let product = product else { return }
+        CartService.shared.addProduct(model: product)
     }
     
     func loadView() {

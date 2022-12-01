@@ -97,7 +97,6 @@ extension CategoriesView: UICollectionViewDelegate {
         let cell: CategoryCell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCell.reuseID, for: indexPath) as! CategoryCell
         cell.isSelected = true
         collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .centeredHorizontally)
-        print(categories[indexPath.row])
         delegate?.scrollToRow(with: categories[indexPath.row])
     }
 }

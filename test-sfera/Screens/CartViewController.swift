@@ -13,10 +13,11 @@ protocol CartViewInputProtocol: AnyObject {
 }
 
 protocol CartViewOutputProtocol {
-    init(view: CartViewInputProtocol)
+//    init(view: CartViewInputProtocol)
     var products: [Product] {get set}
     func getCart()
     func didTapShowProductDetailCell()
+    func updateProducts()
 }
 
 class CartViewController: UIViewController {
@@ -29,7 +30,7 @@ class CartViewController: UIViewController {
         
         tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.reuseID)
         tableView.dataSource = self
-        tableView.delegate = self
+        //tableView.delegate = self
 //        tableView.separatorStyle = .none
         
         return tableView
@@ -73,12 +74,12 @@ class CartViewController: UIViewController {
         
         presenter?.getCart()
         tableView.reloadData()
-        orderButton.layer.cornerRadius = 25
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         tableView.rowHeight = view.bounds.height / 5
+        orderButton.layer.cornerRadius = orderButton.bounds.height / 2
     }
     
     //MARK: - Actions
@@ -102,7 +103,7 @@ class CartViewController: UIViewController {
             make.top.equalTo(tableView.snp.bottom)
             make.left.right.equalToSuperview()
             make.bottom.equalTo(view.safeAreaLayoutGuide)
-            make.height.equalTo(80)
+            make.height.equalToSuperview().multipliedBy(0.1)
         }
 
         
@@ -120,23 +121,39 @@ extension CartViewController: CartViewInputProtocol {
 }
 
 //MARK: - UITableViewDelegate
-extension CartViewController: UITableViewDelegate {
+extension CartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         presenter?.products.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: CartCell.reuseID, for: indexPath) as? CartCell else { return UITableViewCell() }
         guard let products = presenter?.products[indexPath.row] else { return CartCell() }
         
         cell.selectionStyle = .none
+        cell.delegate = self
         cell.configure(model: products)
         
         return cell
     }
 }
 
-//MARK: - UITableViewDataSource
-extension CartViewController: UITableViewDataSource {
-    
+//MARK: - CartCellDelegate
+extension CartViewController: CartCellDelegate {
+    func cartCell(counter: Int, product: Product) {
+        
+        guard let productIndex = presenter?.products.firstIndex(where: {$0.id == product.id }) else { return }
+        
+        presenter?.products[productIndex].items = counter
+        
+        presenter?.updateProducts()
+        
+        if counter == 0 {
+            presenter?.products.remove(at: productIndex)
+            
+            tableView.reloadData()
+        }
+        
+    }
 }
