@@ -11,8 +11,19 @@ class CartService {
     static let shared = CartService()
     private init() {}
     
+    private var productsArchiver = ProductsArchiver()
+    
     private var products: [Product] = []
+    
     var order: Order?
+    
+    func archiveProducts() {
+        
+        print(products)
+        productsArchiver.save(products)
+        
+        print("Save Products OK")
+    }
     
     func addProduct(model: Product) {
         print("addProduct")
@@ -58,7 +69,17 @@ class CartService {
     }
     
     func getProducts() -> [Product] {
+        print(products)
         return products
+    }
+    
+    func loadProducts() {
+        print(products)
+        if products.isEmpty {
+            let data = productsArchiver.retrieve()
+            products.append(contentsOf: data)
+        }
+        print(products)
     }
     
     func createOrder() -> Order {
