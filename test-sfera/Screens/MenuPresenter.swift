@@ -37,6 +37,7 @@ class MenuPresenter: MenuViewOutputProtocol {
     
     func loadView() {
         interactor?.fetchProducts()
+        interactor?.loadProducts()
     }
     
     func didTapShowProductDetailCell(_ product: Product) {
@@ -44,8 +45,7 @@ class MenuPresenter: MenuViewOutputProtocol {
     }
 }
 
-extension MenuPresenter: MenuInteractorOutputProtocol {
-    
+extension MenuPresenter: MenuInteractorOutputProtocol {    
     func receiveProductsData(_ data: ProductsResponse) {
         let productsData = data.items.sorted(by: { first, second in
             return first.category > second.category

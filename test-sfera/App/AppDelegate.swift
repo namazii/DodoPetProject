@@ -32,5 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return self.orientationLock
     }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        CartService.shared.archiveProducts()
+    }
 }
 

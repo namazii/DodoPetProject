@@ -10,6 +10,7 @@ import Foundation
 protocol MenuInteractorInputProtocol {
     init(presenter: MenuInteractorOutputProtocol)
     func fetchProducts()
+    func loadProducts()
 }
 
 protocol MenuInteractorOutputProtocol: AnyObject {
@@ -24,6 +25,10 @@ class MenuInteractor: MenuInteractorInputProtocol {
     }
     
     private let productsAPI = ProductsAPI()
+    
+    func loadProducts() {
+        CartService.shared.loadProducts()
+    }
     
     //MARK: - Requests
     func fetchProducts() {
