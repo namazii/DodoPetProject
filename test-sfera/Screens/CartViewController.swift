@@ -18,6 +18,7 @@ protocol CartViewOutputProtocol {
     func getCart()
     func didTapShowProductDetailCell()
     func updateProducts()
+    func viewDisappear()
 }
 
 class CartViewController: UIViewController {
@@ -80,6 +81,11 @@ class CartViewController: UIViewController {
         super.viewWillLayoutSubviews()
         tableView.rowHeight = view.bounds.height / 5
         orderButton.layer.cornerRadius = orderButton.bounds.height / 2
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+//        presenter?.viewDisappear()
     }
     
     //MARK: - Actions

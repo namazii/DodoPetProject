@@ -8,21 +8,25 @@
 import Foundation
 
 class CartPresenter: CartViewOutputProtocol {
-    
-    func didTapShowProductDetailCell() {
-        //
-    }
-    
     unowned private let view: CartViewInputProtocol
-    
-    var interactor: CartInteractorInputProtocol?
-    
-    var products: [Product] = [] 
     
     init(view: CartViewInputProtocol) {
         self.view = view
     }
     
+    var interactor: CartInteractorInputProtocol?
+    
+    var products: [Product] = []
+    
+    //MARK: - Methods
+    func viewDisappear() {
+        interactor?.saveProducts()
+    }
+    
+    func didTapShowProductDetailCell() {
+        //
+    }
+
     func updateProducts() {
         CartService.shared.updateProducts(model: products)
     }
@@ -33,5 +37,4 @@ class CartPresenter: CartViewOutputProtocol {
 }
 
 extension CartPresenter: CartInteractorOutputProtocol {
-    
 }
