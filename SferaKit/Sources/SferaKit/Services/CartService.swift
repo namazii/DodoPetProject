@@ -7,20 +7,20 @@
 
 import Foundation
 
-class CartService {
-    static let shared = CartService()
-    private init() {}
+public class CartService {
+    public static let shared = CartService()
+    public init() {}
     
-    private var productsArchiver = ProductsArchiver()
+    private var productStoreManager = ProductStoreManager()
     
     private var products: [Product] = []
     
     var order: Order?
     
-    func archiveProducts() {
+    public func archiveProducts() {
         
         print(products)
-        productsArchiver.save(products)
+        productStoreManager.save(products)
         
         print("Save Products OK")
     }
@@ -45,7 +45,7 @@ class CartService {
         
         if let productIndex = productIndex {
             
-            products[productIndex].items += 1
+            products[productIndex].count += 1
             print(products)
             
             //let productInCart = products[productIndex]
@@ -56,7 +56,7 @@ class CartService {
     func updateProducts(model: [Product]) {
         var productArray: [Product] = []
         for i in model {
-            if i.items != 0 {
+            if i.count != 0 {
                 productArray.append(i)
             }
         }
@@ -76,7 +76,7 @@ class CartService {
     func loadProducts() {
         print(products)
         if products.isEmpty {
-            let data = productsArchiver.retrieve()
+            let data = productStoreManager.retrieve()
             products.append(contentsOf: data)
         }
         print(products)

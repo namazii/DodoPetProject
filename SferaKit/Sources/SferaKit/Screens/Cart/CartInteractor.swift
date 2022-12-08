@@ -9,7 +9,7 @@ import Foundation
 
 protocol CartInteractorInputProtocol {
     init(presenter: CartInteractorOutputProtocol)
-    func saveProducts()
+//    func saveProducts()
 }
 
 protocol CartInteractorOutputProtocol: AnyObject {
@@ -22,7 +22,7 @@ class CartInteractor: CartInteractorInputProtocol {
         self.presenter = presenter
     }
     
-    func saveProducts() {
-        CartService.shared.archiveProducts()
-    }
+//    func saveProducts() {
+//        CartService.shared.archiveProducts()
+//    }
 }

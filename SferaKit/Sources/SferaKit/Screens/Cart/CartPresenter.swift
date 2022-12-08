@@ -19,9 +19,9 @@ class CartPresenter: CartViewOutputProtocol {
     var products: [Product] = []
     
     //MARK: - Methods
-    func viewDisappear() {
-        interactor?.saveProducts()
-    }
+//    func viewDisappear() {
+//        interactor?.saveProducts()
+//    }
     
     func didTapShowProductDetailCell() {
         //

@@ -11,6 +11,7 @@ protocol MenuAssemblyInputProtocol {
     func configure(withView view: MenuViewController)
 }
 
+
 class MenuAssembly: MenuAssemblyInputProtocol {
     
     func configure(withView view: MenuViewController) {

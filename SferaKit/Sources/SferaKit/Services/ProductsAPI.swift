@@ -16,8 +16,9 @@ enum NetworkError: Error {
 
 class ProductsAPI {
     
+    @available(iOS 15.0, *)
     func fetchCollection() async throws -> ProductsResponse {
-            guard let url = URL(string: "https://run.mocky.io/v3/f04ed268-416d-4cdf-812d-ab8a8a148d67")
+            guard let url = URL(string: "https://run.mocky.io/v3/bd429942-ecd4-4091-8fb4-c1b0952a4962")
             else {
                 throw NetworkError.invalidURL
             }
@@ -28,4 +29,5 @@ class ProductsAPI {
             }
             return response
     }
+    
 }

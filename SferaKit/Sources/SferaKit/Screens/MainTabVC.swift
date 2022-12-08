@@ -7,8 +7,8 @@
 
 import UIKit
 
-class MainTabVC: UITabBarController {
-    override func viewDidLoad() {
+public class MainTabVC: UITabBarController {
+    public override func viewDidLoad() {
         super.viewDidLoad()
 
         tabBar.tintColor = .tabBarItemAccent
