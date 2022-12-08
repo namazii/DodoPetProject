@@ -22,7 +22,7 @@
 //    
 //    //MARK: Private Methods
 //    private lazy var sizeSegmentControl: UISegmentedControl = {
-//        let segment = UISegmentedControl(items: ["Маленький", "Средний", "Большой"])
+//        let segment = UISegmentedControl(count: ["Маленький", "Средний", "Большой"])
 //        
 //        segment.addTarget(self, action: #selector(sizeSelected), for: .valueChanged)
 //        
@@ -30,7 +30,7 @@
 //    }()
 //    
 //    private lazy var sugarSegmentControl: UISegmentedControl = {
-//        let segment = UISegmentedControl(items: ["Без сахара", "С сахаром"])
+//        let segment = UISegmentedControl(count: ["Без сахара", "С сахаром"])
 //        
 //        segment.addTarget(self, action: #selector(sugarSelected), for: .valueChanged)
 //        

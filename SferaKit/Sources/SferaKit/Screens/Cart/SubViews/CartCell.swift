@@ -116,7 +116,7 @@ class CartCell: UITableViewCell {
         productImageView.image = UIImage(named: model.image)
         headLabel.text = model.name
         infoLabel.text = model.itemDescription
-        steperView.steperCounter = model.items
+        steperView.steperCounter = model.count
     }
 }
 

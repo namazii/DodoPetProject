@@ -18,7 +18,7 @@ protocol CartViewOutputProtocol {
     func getCart()
     func didTapShowProductDetailCell()
     func updateProducts()
-    func viewDisappear()
+//    func viewDisappear()
 }
 
 class CartViewController: UIViewController {
@@ -83,10 +83,10 @@ class CartViewController: UIViewController {
         orderButton.layer.cornerRadius = orderButton.bounds.height / 2
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-//        presenter?.viewDisappear()
-    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        super.viewDidDisappear(animated)
+////        presenter?.viewDisappear()
+//    }
     
     //MARK: - Actions
     @objc private func addOrder() {
@@ -151,7 +151,7 @@ extension CartViewController: CartCellDelegate {
         
         guard let productIndex = presenter?.products.firstIndex(where: {$0.id == product.id }) else { return }
         
-        presenter?.products[productIndex].items = counter
+        presenter?.products[productIndex].count = counter
         
         presenter?.updateProducts()
         
