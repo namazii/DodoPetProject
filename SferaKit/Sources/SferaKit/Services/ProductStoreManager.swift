@@ -31,8 +31,9 @@ final class ProductStoreManager {
 //    }()
     
     lazy var persistentContainer: NSPersistentContainer = {
-        let modelURL = Bundle.module.url(forResource: "ProductsData", withExtension: "momd")!
-        let model = NSManagedObjectModel(contentsOf: modelURL)!
+        guard let modelURL = Bundle.module.url(forResource: "ProductsData", withExtension: "momd"),
+              let model = NSManagedObjectModel(contentsOf: modelURL) else { return NSPersistentContainer() }
+        
         let container = NSPersistentCloudKitContainer(name: "ProductsData", managedObjectModel: model)
         container.loadPersistentStores { (storeDescription, error) in
             if let error = error as NSError? {

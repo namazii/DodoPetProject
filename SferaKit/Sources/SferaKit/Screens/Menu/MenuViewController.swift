@@ -30,7 +30,7 @@ class MenuViewController: UIViewController, ScreenRoutable {
     
     //MARK: - CityLabel
     private let cityLabel = UILabel(text: "Москва")
-    private let chevronImageView = UIImageView(image: UIImage(named: "chevron"))
+    private let chevronImageView = UIImageView(image: UIImage(named: "chevron", in: .module, with: nil))
     private lazy var chooseCityView: UIView = {
         let view = UIView()
         

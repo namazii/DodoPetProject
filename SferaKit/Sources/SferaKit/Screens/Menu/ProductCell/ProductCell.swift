@@ -123,6 +123,7 @@ class ProductCell: UITableViewCell {
         headLabel.text = model.name
         infoLabel.text = model.itemDescription
         priceButton.setTitle("   От \(model.price)   ", for: .normal)
-        productImageView.image = UIImage(named: model.image)
+//        productImageView.image = UIImage(named: model.image)
+        productImageView.image = UIImage(named: model.image, in: .module, with: nil)
     }
 }

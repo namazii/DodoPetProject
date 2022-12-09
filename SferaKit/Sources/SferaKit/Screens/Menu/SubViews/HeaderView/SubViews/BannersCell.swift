@@ -51,7 +51,8 @@ final class BannersCell: UICollectionViewCell {
     
     //MARK: - Public Methods
     func configure(string: String) {
-        imageView.image = UIImage(named: string)
+//        imageView.image = UIImage(named: string)
+        imageView.image = UIImage(named: string, in: .module, with: nil)
     }
 }
 

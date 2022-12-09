@@ -41,6 +41,7 @@ class ProductImageCell: UITableViewCell {
     
     //MARK: - Public Properties
     func configure(image: String) {
-        productImage.image = UIImage(named: image)
+//        productImage.image = UIImage(named: image)
+        productImage.image = UIImage(named: image, in: .module, with: nil)
     }
 }

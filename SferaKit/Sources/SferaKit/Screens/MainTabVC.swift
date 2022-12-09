@@ -29,7 +29,7 @@ public class MainTabVC: UITabBarController {
 
     private func setupTabBarItem(image: String, title: String) -> UITabBarItem {
         let tabBarItem = UITabBarItem()
-        tabBarItem.image = UIImage(named: image)
+        tabBarItem.image = UIImage(named: image, in: .module, compatibleWith: nil)
         tabBarItem.title = title
         return tabBarItem
     }
