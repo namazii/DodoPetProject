@@ -18,7 +18,7 @@ class ProductsAPI {
     
     @available(iOS 15.0, *)
     func fetchCollection() async throws -> ProductsResponse {
-            guard let url = URL(string: "https://run.mocky.io/v3/bd429942-ecd4-4091-8fb4-c1b0952a4962")
+            guard let url = URL(string: "https://run.mocky.io/v3/31a65c6f-96d6-4938-8687-8b5fb38b75fd")
             else {
                 throw NetworkError.invalidURL
             }

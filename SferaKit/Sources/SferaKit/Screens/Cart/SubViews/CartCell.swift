@@ -24,7 +24,7 @@ class CartCell: UITableViewCell {
         let image = UIImageView()
         
         image.contentMode = .scaleAspectFit
-        image.image = UIImage(named: "pizza")
+        image.image = UIImage(named: "pizza", in: .module, with: nil)
         
         return image
     }()
@@ -113,7 +113,7 @@ class CartCell: UITableViewCell {
     
     func configure(model: Product) {
         self.product = model
-        productImageView.image = UIImage(named: model.image)
+        productImageView.image = UIImage(named: model.image, in: .module, with: nil)
         headLabel.text = model.name
         infoLabel.text = model.itemDescription
         steperView.steperCounter = model.count

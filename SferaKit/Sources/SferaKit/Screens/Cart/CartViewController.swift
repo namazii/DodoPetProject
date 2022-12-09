@@ -9,16 +9,13 @@ import UIKit
 import SnapKit
 
 protocol CartViewInputProtocol: AnyObject {
-    
 }
 
 protocol CartViewOutputProtocol {
-//    init(view: CartViewInputProtocol)
     var products: [Product] {get set}
     func getCart()
     func didTapShowProductDetailCell()
     func updateProducts()
-//    func viewDisappear()
 }
 
 class CartViewController: UIViewController {
@@ -82,11 +79,6 @@ class CartViewController: UIViewController {
         tableView.rowHeight = view.bounds.height / 5
         orderButton.layer.cornerRadius = orderButton.bounds.height / 2
     }
-    
-//    override func viewDidDisappear(_ animated: Bool) {
-//        super.viewDidDisappear(animated)
-////        presenter?.viewDisappear()
-//    }
     
     //MARK: - Actions
     @objc private func addOrder() {
