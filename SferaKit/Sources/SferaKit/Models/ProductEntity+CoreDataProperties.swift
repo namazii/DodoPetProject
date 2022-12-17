@@ -10,11 +10,11 @@ import Foundation
 import CoreData
 
 extension ProductEntity {
-
+    
     @nonobjc class func fetchRequest() -> NSFetchRequest<ProductEntity> {
         return NSFetchRequest<ProductEntity>(entityName: "ProductEntity")
     }
-
+    
     @NSManaged var category: String?
     @NSManaged var count: Int16
     @NSManaged var id: Int32
@@ -22,9 +22,9 @@ extension ProductEntity {
     @NSManaged var itemDescription: String?
     @NSManaged var name: String?
     @NSManaged var price: Int16
-
+    
 }
 
 extension ProductEntity : Identifiable {
-
+    
 }

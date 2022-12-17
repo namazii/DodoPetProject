@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-class ProductCell: UITableViewCell {
-
+final class ProductCell: UITableViewCell {
+    
     static let reuseID = "ProductCell"
     
     //MARK: - Private Properties
@@ -82,10 +82,17 @@ class ProductCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         headLabel.font = .systemFont(ofSize: contentView.frame.height / 8.4)
         infoLabel.font = .systemFont(ofSize: contentView.frame.height / 11)
         priceButton.layer.cornerRadius = priceButton.frame.height / 2
+    }
+    
+    //MARK: - Public Methods
+    func configure(model: Product) {
+        headLabel.text = model.name
+        infoLabel.text = model.itemDescription
+        priceButton.setTitle("   От \(model.price)   ", for: .normal)
+        productImageView.image = UIImage(named: model.image, in: .module, with: nil)
     }
     
     //MARK: - Private Methods
@@ -116,14 +123,5 @@ class ProductCell: UITableViewCell {
         headLabel.snp.makeConstraints { make in
             make.height.equalTo(stackViewMain.snp.height).multipliedBy(0.15)
         }
-    }
-    
-    //MARK: - Public Methods
-    func configure(model: Product) {
-        headLabel.text = model.name
-        infoLabel.text = model.itemDescription
-        priceButton.setTitle("   От \(model.price)   ", for: .normal)
-//        productImageView.image = UIImage(named: model.image)
-        productImageView.image = UIImage(named: model.image, in: .module, with: nil)
     }
 }

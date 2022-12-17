@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductInfoCell: UITableViewCell {
+final class ProductInfoCell: UITableViewCell {
     
     static let reuseID = "ProductInfoCell"
     
@@ -54,6 +54,12 @@ class ProductInfoCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Public Methods
+    func configure(product: Product?) {
+        nameLabel.text = product?.name
+        infoLabel.text = product?.itemDescription
+    }
+    
     //MARK: - Private Methods
     private func setupViews() {
         contentView.addSubview(nameLabel)
@@ -68,11 +74,4 @@ class ProductInfoCell: UITableViewCell {
             make.height.equalToSuperview().multipliedBy(0.6)
         }
     }
-    
-    //MARK: - Public Methods
-    func configure(product: Product?) {
-        nameLabel.text = product?.name
-        infoLabel.text = product?.itemDescription
-    }
-     
 }

@@ -39,6 +39,7 @@ final class CategoryCell: UICollectionViewCell {
     //MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
+        
         setupViews()
     }
     
@@ -48,7 +49,6 @@ final class CategoryCell: UICollectionViewCell {
     
     //MARK: - Private Methods
     private func setupViews() {
-        
         backgroundColor = .systemBackground
         
         contentView.layer.borderWidth = 1

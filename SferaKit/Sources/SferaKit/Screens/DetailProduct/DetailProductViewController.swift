@@ -9,40 +9,41 @@ import UIKit
 import SnapKit
 
 protocol DetailProductViewInputProtocol: AnyObject {
-    func updateProduct()
+    func updateProduct(_ produc: Product?)
 }
 
 protocol DetailProductViewOutputProtocol {
-//    init(view: DetailProductViewInputProtocol)
     func loadView()
     var product: Product? {get set}
     func addToCart()
 }
 
-class DetailProductViewController: UIViewController {
+final class DetailProductViewController: UIViewController {
     
-    //MARK: - Enums
-    enum SectionType: Int, CaseIterable {
-        case image = 0
-        case info = 1
-//        case ingredients = 2
+    var presenter: DetailProductViewOutputProtocol?
+    
+    var tableAdapter: DetailProductTableAdapter
+    
+    init(tableAdapter: DetailProductTableAdapter) {
+        self.tableAdapter = tableAdapter
+        super.init(nibName: nil, bundle: nil)
     }
-
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - Private Properties
-    private let assembly: DetailProductAssemblyInputProtocol = DetailProductAssembly()
-    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         
         tableView.register(ProductImageCell.self, forCellReuseIdentifier: ProductImageCell.reuseID)
         tableView.register(ProductInfoCell.self, forCellReuseIdentifier: ProductInfoCell.reuseID)
-//        tableView.register(ProductIngredientsCell.self, forCellReuseIdentifier: ProductIngredientsCell.reuseID)
         tableView.isScrollEnabled = false
         tableView.separatorStyle = .none
         tableView.allowsSelection = false
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.dataSource = tableAdapter
+        tableView.delegate = tableAdapter
         
         return tableView
     }()
@@ -66,13 +67,10 @@ class DetailProductViewController: UIViewController {
         return button
     }()
     
-    //MARK: - Public Properties
-    var presenter: DetailProductViewOutputProtocol?
-
-    
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         presenter?.loadView()
         
         setupViews()
@@ -128,80 +126,12 @@ class DetailProductViewController: UIViewController {
 
 //MARK: - DetailProductViewInputProtocol
 extension DetailProductViewController: DetailProductViewInputProtocol {
-    func updateProduct() {
-        tableView.reloadData()
+    func updateProduct(_ produc: Product?) {
+        tableAdapter.product = produc
     }
+    
+//    func updateProduct() {
+////        tableView.reloadData()
+//    }
 }
 
-//MARK: - Delegate, DataSource
-extension DetailProductViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SectionType.allCases.count
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let sectionType = SectionType.init(rawValue: indexPath.row)
-        
-        switch sectionType {
-        case .image:
-            
-            return view.frame.height / 2
-        case .info:
-            return view.frame.height / 10
-//        case .ingredients:
-//            return 150
-        default:
-            return 0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let sectionType = SectionType.init(rawValue: indexPath.row)
-        
-        switch sectionType {
-        case .image:
-            let imageCell = tableView.dequeueReusableCell(withIdentifier: ProductImageCell.reuseID)
-            guard let cell = imageCell as? ProductImageCell else { return UITableViewCell() }
-            
-            cell.configure(image: presenter?.product?.image ?? "pizza1")
-            return cell
-        case .info:
-            let infoCell = tableView.dequeueReusableCell(withIdentifier: ProductInfoCell.reuseID)
-            guard let cell = infoCell as? ProductInfoCell else { return UITableViewCell() }
-            
-            cell.configure(product: presenter?.product)
-            return cell
-//        case.ingredients:
-//            let ingredientsCell = tableView.dequeueReusableCell(withIdentifier: ProductIngredientsCell.reuseID)
-//            guard let cell = ingredientsCell as? ProductIngredientsCell else { return UITableViewCell() }
-//
-//
-//            cell.delegate = self
-//
-//            return cell
-        default:
-            return UITableViewCell()
-        }
-    }
-    
-}
-
-////MARK: - ProductIngredientsCellDelegate
-//extension DetailProductViewController: ProductIngredientsCellDelegate {
-//
-//    func selectProductIngredientsSize(string: String) {
-//        print(string)
-//        presenter?.product?.size = string
-//    }
-//
-//    func selectProductIngredientsSugar(bool: Bool) {
-//        print(bool)
-//        presenter?.product?.sugar = bool
-//    }
-//
-//    func selectProductIngredientsCinnamon(bool: Bool) {
-//        print(bool)
-//        presenter?.product?.cinnamon = bool
-//    }
-//}

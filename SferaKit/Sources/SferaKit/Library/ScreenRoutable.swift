@@ -17,26 +17,27 @@ protocol ScreenRoutable: AnyObject {
 }
 
 extension ScreenRoutable where Self: UIViewController {
+    
     func showScreen(_ screen: UIViewController) {
         show(screen, sender: nil)
     }
-
+    
     func dismissView(animated: Bool, completion: (() -> Void)?) {
         presentingViewController?.dismiss(animated: animated, completion: completion)
     }
-
+    
     func presentScreen(_ screen: UIViewController, animated: Bool, completion: (() -> Void)?) {
         present(screen, animated: animated, completion: completion)
     }
-
+    
     func pop(animated: Bool) {
         navigationController?.popViewController(animated: animated)
     }
-
+    
     func popToRoot(animated _: Bool) {
         navigationController?.popToRootViewController(animated: true)
     }
-
+    
     func push(screen: UIViewController, animated: Bool) {
         navigationController?.pushViewController(screen, animated: animated)
     }

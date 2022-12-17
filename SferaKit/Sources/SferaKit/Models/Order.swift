@@ -30,18 +30,3 @@ class Order: Codable {
         case time, name, phone, address
     }
 }
-
-//// MARK: - Product
-//struct Order: Codable {
-//    let id: Int
-//    let name, category, productDescription, image: String
-//    let cinnamon, sugar: Bool
-//    let variant, size: String
-//    let price, count: Int
-//
-//    enum CodingKeys: String, CodingKey {
-//        case id, name, category
-//        case productDescription = "description"
-//        case image, cinnamon, sugar, variant, size, price, count
-//    }
-//}

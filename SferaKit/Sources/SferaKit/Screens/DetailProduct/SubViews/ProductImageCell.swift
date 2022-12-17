@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProductImageCell: UITableViewCell {
+final class ProductImageCell: UITableViewCell {
     
     static let reuseID = "ProductImageCell"
     
@@ -41,7 +41,6 @@ class ProductImageCell: UITableViewCell {
     
     //MARK: - Public Properties
     func configure(image: String) {
-//        productImage.image = UIImage(named: image)
         productImage.image = UIImage(named: image, in: .module, with: nil)
     }
 }

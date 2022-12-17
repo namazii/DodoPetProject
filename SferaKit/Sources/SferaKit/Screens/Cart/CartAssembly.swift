@@ -8,16 +8,30 @@
 import Foundation
 
 protocol CartAssemblyInputProtocol {
-    func configure(withView view: CartViewController)
+    func configure() -> CartViewController
 }
 
-class CartAssembly: CartAssemblyInputProtocol {
+final class CartAssembly: CartAssemblyInputProtocol {
     
-    func configure(withView view: CartViewController) {
-        let presenter = CartPresenter(view: view)
+    func configure() -> CartViewController {
+        
+        let tableAdapter = CartTableAdapter()
+        
+        let view = CartViewController.init(tableAdapter: tableAdapter)
+        
+//        tableAdapter.view = view
+        
+        let router = CartRouter()
+        let presenter = CartPresenter.init(view: view, router: router)
+        
+        tableAdapter.presenter = presenter
+        
         let interactor = CartInteractor(presenter: presenter)
         
         view.presenter = presenter
         presenter.interactor = interactor
+        router.view = view
+        
+        return view
     }
 }

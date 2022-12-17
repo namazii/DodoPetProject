@@ -8,7 +8,6 @@
 import Foundation
 
 protocol CityPopOverInteractorInputProtocol {
-    init(presenter: CityPopOverInteractorOutputProtocol)
     func fetchCities()
 }
 
@@ -16,14 +15,15 @@ protocol CityPopOverInteractorOutputProtocol: AnyObject {
     func receiveCitiesData(_ citys: [String])
 }
 
-class CityPopOverInteractor: CityPopOverInteractorInputProtocol {
-    unowned private let presenter: CityPopOverInteractorOutputProtocol
+final class CityPopOverInteractor: CityPopOverInteractorInputProtocol {
+    
+    weak var presenter: CityPopOverInteractorOutputProtocol?
 
     required init(presenter: CityPopOverInteractorOutputProtocol) {
         self.presenter = presenter
     }
     
     func fetchCities() {
-        presenter.receiveCitiesData(["Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань", "Самара", "Омск"])
+        presenter?.receiveCitiesData(["Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань", "Самара", "Омск"])
     }
 }

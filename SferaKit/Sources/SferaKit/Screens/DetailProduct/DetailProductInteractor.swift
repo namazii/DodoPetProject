@@ -8,7 +8,6 @@
 import Foundation
 
 protocol DetailProductInteractorInputProtocol {
-    init(presenter: DetailProductInteractorOutputProtocol)
     func fetchProduct()
 }
 
@@ -16,12 +15,11 @@ protocol DetailProductInteractorOutputProtocol: AnyObject {
     func receiveProductsData(_ data: Product?)
 }
 
-class DetailProductInteractor: DetailProductInteractorInputProtocol {
+final class DetailProductInteractor: DetailProductInteractorInputProtocol {
     func fetchProduct() {
-        
     }
     
-    unowned private let presenter: DetailProductInteractorOutputProtocol
+    weak var presenter: DetailProductInteractorOutputProtocol?
 
     required init(presenter: DetailProductInteractorOutputProtocol) {
         self.presenter = presenter

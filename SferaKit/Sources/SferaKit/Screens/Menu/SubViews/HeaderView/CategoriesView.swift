@@ -7,13 +7,15 @@
 
 import UIKit
 
-//MARK: - ScrollToCategoryViewDelegate
-protocol ScrollToCategoryViewDelegate: AnyObject {
+//MARK: - CategoriesViewDelegate
+protocol CategoriesViewDelegate: AnyObject {
     func scrollToRow(with category: String)
 }
 
 //MARK: - CategoriesView
 final class CategoriesView: UITableViewHeaderFooterView {
+    
+    weak var delegate: CategoriesViewDelegate?
     
     //MARK: - Private Properties
     private var categories: [String]
@@ -28,10 +30,6 @@ final class CategoriesView: UITableViewHeaderFooterView {
         
         return collectionView
     }()
-    
-    //MARK: - Delegate
-    weak var delegate: ScrollToCategoryViewDelegate?
-    
     
     //MARK: - LifeCycle
     init(categories: [String]) {
@@ -79,7 +77,6 @@ final class CategoriesView: UITableViewHeaderFooterView {
 
 //MARK: - UICollectionViewDataSource
 extension CategoriesView: UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return categories.count
     }

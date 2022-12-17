@@ -12,7 +12,7 @@ protocol CartSteperViewDelegate: AnyObject {
     func carStepperView(_ stepperCounter: Int )
 }
 
-class CartSteperView: UIView {
+final class CartSteperView: UIView {
     
     var steperCounter = 1 {
         didSet {
@@ -22,6 +22,7 @@ class CartSteperView: UIView {
     
     weak var delegate: CartSteperViewDelegate?
     
+    //MARK: - Private Properties
     private lazy var countLabel: UILabel = {
         let label = UILabel()
         
@@ -73,6 +74,7 @@ class CartSteperView: UIView {
         return backView
     }()
     
+    //MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -89,6 +91,7 @@ class CartSteperView: UIView {
         steperBackView.layer.cornerRadius = self.bounds.height / 2
     }
     
+    //MARK: - Private Methods
     private func setupViews() {
         self.backgroundColor = .systemBackground
         self.addSubview(steperBackView)

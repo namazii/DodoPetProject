@@ -7,17 +7,16 @@
 
 import Foundation
 
-protocol DetailModuleInput: AnyObject {
-    
+protocol DetailModuleInputProtocol: AnyObject {
     func configureModule(with product: Product)
 }
 
-class DetailProductPresenter: DetailProductViewOutputProtocol {
-    unowned private let view: DetailProductViewInputProtocol
+final class DetailProductPresenter: DetailProductViewOutputProtocol {
+    
+    weak var view: DetailProductViewInputProtocol?
     
 //    var router: MenuRouter?
     var interactor: DetailProductInteractorInputProtocol?
-    
     
     var product: Product?
     
@@ -41,12 +40,8 @@ extension DetailProductPresenter: DetailProductInteractorOutputProtocol {
     }
 }
 
-extension DetailProductPresenter: DetailModuleInput {
-    
+extension DetailProductPresenter: DetailModuleInputProtocol {
     func configureModule(with product: Product) {
-        
-        self.product = product
-        
-        view.updateProduct()
-    }
+//        self.product = product
+        view?.updateProduct(product)    }
 }
