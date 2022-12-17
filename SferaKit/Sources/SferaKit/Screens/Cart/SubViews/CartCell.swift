@@ -12,7 +12,7 @@ protocol CartCellDelegate: AnyObject {
     func cartCell(counter: Int, product: Product)
 }
 
-class CartCell: UITableViewCell {
+final class CartCell: UITableViewCell {
     
     static let reuseID = "CartCell"
     
@@ -20,6 +20,7 @@ class CartCell: UITableViewCell {
     
     var product: Product?
     
+    //MARK: - Private Properties
     private let productImageView: UIImageView = {
         let image = UIImageView()
         
@@ -80,6 +81,7 @@ class CartCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Private Methods
     private func setupViews() {
         contentView.addSubview(productImageView)
         contentView.addSubview(stackViewMain)
@@ -120,13 +122,11 @@ class CartCell: UITableViewCell {
     }
 }
 
+//MARK: - CartSteperViewDelegate
 extension CartCell: CartSteperViewDelegate {
-    
     func carStepperView(_ stepperCounter: Int) {
         if let product = product {
             delegate?.cartCell(counter: stepperCounter, product: product)
         }
-        
     }
-    
 }

@@ -8,18 +8,17 @@
 import Foundation
 
 protocol MenuInteractorInputProtocol {
-    init(presenter: MenuInteractorOutputProtocol)
     func fetchProducts()
     func loadProducts()
 }
 
 protocol MenuInteractorOutputProtocol: AnyObject {
-    func receiveProductsData(_ data: ProductsResponse)
+    func receiveProducts(_ data: ProductsResponse)
 }
 
-
-class MenuInteractor: MenuInteractorInputProtocol {
-    unowned private let presenter: MenuInteractorOutputProtocol
+final class MenuInteractor: MenuInteractorInputProtocol {
+    
+    weak var presenter: MenuInteractorOutputProtocol?
     
     required init(presenter: MenuInteractorOutputProtocol) {
         self.presenter = presenter
@@ -32,20 +31,9 @@ class MenuInteractor: MenuInteractorInputProtocol {
     }
     
     //MARK: - Requests
-
     func fetchProducts() {
-        Task {
-            do {
-                if #available(iOS 15.0, *) {
-                    let result = try await productsAPI.fetchCollection()
-                    presenter.receiveProductsData(result)
-                } else {
-                    // Fallback on earlier versions
-                } //Запрос в сеть
-                
-            } catch {
-                print(error)
-            }
+        productsAPI.fetchCollection() { [weak self] result in
+            self?.presenter?.receiveProducts(result)
         }
     }
 }

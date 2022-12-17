@@ -6,3 +6,23 @@
 //
 
 import Foundation
+import UIKit
+
+protocol CartRouterInputProtocol {
+    func showOrderProgress()
+}
+
+protocol CartRouterOutputProtocol {
+}
+
+final class CartRouter: CartRouterInputProtocol {
+    
+    weak var view: ScreenRoutable?
+    
+    func showOrderProgress() {
+        
+        let vc = OrderProgressVC()
+        let nav = UINavigationController(rootViewController: vc)
+        view?.presentScreen(nav, animated: true, completion: nil)
+    }
+}

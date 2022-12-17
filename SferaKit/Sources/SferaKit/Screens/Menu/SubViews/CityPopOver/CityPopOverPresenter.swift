@@ -7,14 +7,12 @@
 
 import Foundation
 
-class CityPopOverPresenter: CityPopOverViewOutputProtocol {
-    unowned private let view: CityPopOverViewInputProtocol
+final class CityPopOverPresenter: CityPopOverViewOutputProtocol {
+    
+    weak var view: CityPopOverViewInputProtocol?
     
 //    var router:
     var interactor: CityPopOverInteractorInputProtocol?
-    
-    var cities: [String] = []
-    
     
     init(view: CityPopOverViewInputProtocol) {
         self.view = view
@@ -27,6 +25,6 @@ class CityPopOverPresenter: CityPopOverViewOutputProtocol {
 
 extension CityPopOverPresenter: CityPopOverInteractorOutputProtocol {
     func receiveCitiesData(_ cities: [String]) {
-        self.cities = cities
+        view?.updateCities(cities)
     }
 }

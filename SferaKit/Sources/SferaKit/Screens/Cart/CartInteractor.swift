@@ -8,21 +8,16 @@
 import Foundation
 
 protocol CartInteractorInputProtocol {
-    init(presenter: CartInteractorOutputProtocol)
-//    func saveProducts()
 }
 
 protocol CartInteractorOutputProtocol: AnyObject {
 }
 
-class CartInteractor: CartInteractorInputProtocol {
-    unowned private let presenter: CartInteractorOutputProtocol
+final class CartInteractor: CartInteractorInputProtocol {
+    
+    weak var presenter: CartInteractorOutputProtocol?
     
     required init(presenter: CartInteractorOutputProtocol) {
         self.presenter = presenter
     }
-    
-//    func saveProducts() {
-//        CartService.shared.archiveProducts()
-//    }
 }

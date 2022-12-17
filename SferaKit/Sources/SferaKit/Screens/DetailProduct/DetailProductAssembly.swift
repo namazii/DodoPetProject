@@ -8,19 +8,17 @@
 import Foundation
 
 protocol DetailProductAssemblyInputProtocol {
-    func configure(withView view: DetailProductViewController)
     func configure(with product: Product) -> DetailProductViewController
 }
 
-class DetailProductAssembly: DetailProductAssemblyInputProtocol {
+final class DetailProductAssembly: DetailProductAssemblyInputProtocol {
     
     func configure(with product: Product) -> DetailProductViewController {
+        let tableAdapter = DetailProductTableAdapter()
         
-        let view = DetailProductViewController.init()
+        let view = DetailProductViewController.init(tableAdapter: tableAdapter)
         
         let presenter = DetailProductPresenter.init(view: view)
-        
-       
         
         let interactor = DetailProductInteractor.init(presenter: presenter)
         
@@ -30,17 +28,5 @@ class DetailProductAssembly: DetailProductAssemblyInputProtocol {
         presenter.configureModule(with: product)
         
         return view
-    }
-    
-    func configure(withView view: DetailProductViewController) {
-        let presenter = DetailProductPresenter(view: view)
-        let interactor = DetailProductInteractor(presenter: presenter)
-//        let router = MenuRouter()
-
-        view.presenter = presenter
-        presenter.interactor = interactor
-//        presenter.router = router
-//        router.view = view
-
     }
 }

@@ -8,6 +8,7 @@
 import Foundation
 
 public class CartService {
+    
     public static let shared = CartService()
     public init() {}
     

@@ -9,38 +9,44 @@ import UIKit
 import SnapKit
 
 protocol CityPopOverViewInputProtocol: AnyObject {
-    
+    func updateCities(_ cities: [String])
 }
 
 protocol CityPopOverViewOutputProtocol {
-//    init(view: CityPopOverViewInputProtocol)
     func loadView()
-    var cities: [String] {get set}
 }
 
-class CityPopOverViewController: UIViewController {
+final class CityPopOverViewController: UIViewController {
+    
+    var presenter: CityPopOverViewOutputProtocol?
+    
+    var tableAdapter: CityPopOverTableAdapter
+    
+    init(tableAdapter: CityPopOverTableAdapter) {
+        self.tableAdapter = tableAdapter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     //MARK: - Private Properties
-    private let assembly: CityPopOverAssemblyInputProtocol = CityPopOverAssembly()
-    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         
         tableView.register(CityPopOverCell.self, forCellReuseIdentifier: CityPopOverCell.reuseID)
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.dataSource = tableAdapter
+        tableView.delegate = tableAdapter
         tableView.separatorStyle = .none
         
         return tableView
     }()
 
-    //MARK: - Public Properties
-    var presenter: CityPopOverViewOutputProtocol?
-    
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        assembly.configure(withView: self)
+        
         presenter?.loadView()
         
         setupViews()
@@ -60,19 +66,7 @@ class CityPopOverViewController: UIViewController {
 
 //MARK: - CityPopOverViewInputProtocol
 extension CityPopOverViewController: CityPopOverViewInputProtocol {
-    
-}
-
-//MARK: - Delegate, DataSource
-extension CityPopOverViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.cities.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CityPopOverCell.reuseID, for: indexPath) as? CityPopOverCell else { return UITableViewCell() }
-        guard let cities = presenter?.cities else { return CityPopOverCell() }
-        cell.configure(city: cities[indexPath.row])
-        return cell
+    func updateCities(_ cities: [String]) {
+        tableAdapter.cities = cities
     }
 }
