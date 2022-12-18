@@ -19,18 +19,10 @@ public class CartService {
     var order: Order?
     
     public func archiveProducts() {
-        
-        print(products)
         productStoreManager.save(products)
-        
-        print("Save Products OK")
     }
     
     func addProduct(model: Product) {
-        print("addProduct")
-        print(model)
-        
-        
         if products.isEmpty {
             products.append(model)
             return
@@ -47,7 +39,6 @@ public class CartService {
         if let productIndex = productIndex {
             
             products[productIndex].count += 1
-            print(products)
             
             //let productInCart = products[productIndex]
             return
@@ -70,17 +61,14 @@ public class CartService {
     }
     
     func getProducts() -> [Product] {
-        print(products)
         return products
     }
     
     func loadProducts() {
-        print(products)
         if products.isEmpty {
             let data = productStoreManager.retrieve()
             products.append(contentsOf: data)
         }
-        print(products)
     }
     
     func createOrder() -> Order {
