@@ -129,9 +129,5 @@ extension DetailProductViewController: DetailProductViewInputProtocol {
     func updateProduct(_ produc: Product?) {
         tableAdapter.product = produc
     }
-    
-//    func updateProduct() {
-////        tableView.reloadData()
-//    }
 }
 

@@ -8,13 +8,14 @@
 import UIKit
 
 protocol CartTableAdapterOutput: AnyObject {
-    func updateProducts() -> [Product]
-    func requestPrice()
+//    func requestPrice()
+    func sendProducts(_ products: [Product])
+    func tableReloadData()
 }
 
 final class CartTableAdapter: NSObject {
     weak var presenter: CartTableAdapterOutput?
-//    weak var view: CartCellDelegate?
+    weak var view: CartCellDelegate?
     var products: [Product] = []
 }
 
@@ -42,14 +43,16 @@ extension CartTableAdapter: CartCellDelegate {
         
         products[productIndex].count = counter
         
-        guard let items = presenter?.updateProducts() else { return }
-        products = items
-        presenter?.requestPrice()
+//        guard let items = presenter?.updateProducts() else { return }
+//        products = items
+//        presenter?.requestPrice()
         
         if counter == 0 {
             products.remove(at: productIndex)
             
+            presenter?.tableReloadData()
 //            tableView.reloadData()
         }
+        presenter?.sendProducts(products)
     }
 }

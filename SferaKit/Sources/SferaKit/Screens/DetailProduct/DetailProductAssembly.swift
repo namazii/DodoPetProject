@@ -14,6 +14,7 @@ protocol DetailProductAssemblyInputProtocol {
 final class DetailProductAssembly: DetailProductAssemblyInputProtocol {
     
     func configure(with product: Product) -> DetailProductViewController {
+        
         let tableAdapter = DetailProductTableAdapter()
         
         let view = DetailProductViewController.init(tableAdapter: tableAdapter)

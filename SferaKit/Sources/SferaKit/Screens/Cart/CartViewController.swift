@@ -9,12 +9,14 @@ import UIKit
 import SnapKit
 
 protocol CartViewInputProtocol: AnyObject {
+    func updateProducts(_ products: [Product])
     func getTotalPrice(price: String)
+    func tableReloadData()
 //    func updateProducts(_ products: [Product])
 }
 
 protocol CartViewOutputProtocol {
-    var products: [Product] {get set}
+//    var products: [Product] {get set}
     func getCart()
     func didTapOrderButton()
 //    func updateProducts()
@@ -69,11 +71,13 @@ final class CartViewController: UIViewController, ScreenRoutable {
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
         presenter?.getCart()
         tableView.reloadData()
     }
@@ -117,6 +121,13 @@ final class CartViewController: UIViewController, ScreenRoutable {
 
 //MARK: - CartViewInputProtocol
 extension CartViewController: CartViewInputProtocol {
+    func updateProducts(_ products: [Product]) {
+        tableAdapter.products = products
+    }
+    
+    func tableReloadData() {
+        tableView.reloadData()
+    }
 //    func updateProducts(_ products: [Product]) {
 //        tableAdapter.products = products
 //    }

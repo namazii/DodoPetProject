@@ -42,6 +42,6 @@ extension DetailProductPresenter: DetailProductInteractorOutputProtocol {
 
 extension DetailProductPresenter: DetailModuleInputProtocol {
     func configureModule(with product: Product) {
-//        self.product = product
+        self.product = product
         view?.updateProduct(product)    }
 }

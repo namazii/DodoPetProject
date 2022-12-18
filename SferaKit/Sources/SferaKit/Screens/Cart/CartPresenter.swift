@@ -19,9 +19,9 @@ final class CartPresenter: CartViewOutputProtocol {
         self.router = router
     }
 
-    var products: [Product] = []
+//    var products: [Product] = []
     
-    private func totalSum() -> String {
+    private func totalSum(_ products: [Product]) -> String {
         var totalPrice = 0
         products.forEach { product in
             totalPrice += (product.price * product.count)
@@ -35,8 +35,10 @@ final class CartPresenter: CartViewOutputProtocol {
     }
     
     func getCart() {
-        products = CartService.shared.getProducts()
-        let price = totalSum()
+        guard let cartItems = interactor?.loadCart() else { return }
+        view?.updateProducts(cartItems)
+        
+        let price = totalSum(cartItems)
         view?.getTotalPrice(price: price)
     }
 }
@@ -45,13 +47,11 @@ extension CartPresenter: CartInteractorOutputProtocol {
 }
 
 extension CartPresenter: CartTableAdapterOutput {
-    func updateProducts() -> [Product] {
-        return products
+    func tableReloadData() {
+        view?.tableReloadData()
     }
     
-    func requestPrice() {
-        let price = totalSum()
-        view?.getTotalPrice(price: price)
-        CartService.shared.updateProducts(model: products)
+    func sendProducts(_ products: [Product]) {
+        interactor?.updateCart(products)
     }
 }

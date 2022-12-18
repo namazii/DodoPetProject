@@ -28,7 +28,6 @@ extension DetailProductTableAdapter: UITableViewDataSource {
         
         switch sectionType {
         case .image:
-            
             return UIScreen.main.bounds.height / 2
             
         case .info:
