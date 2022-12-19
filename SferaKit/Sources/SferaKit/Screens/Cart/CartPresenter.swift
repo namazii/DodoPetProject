@@ -18,8 +18,6 @@ final class CartPresenter: CartViewOutputProtocol {
         self.view = view
         self.router = router
     }
-
-//    var products: [Product] = []
     
     private func totalSum(_ products: [Product]) -> String {
         var totalPrice = 0
@@ -46,12 +44,14 @@ final class CartPresenter: CartViewOutputProtocol {
 extension CartPresenter: CartInteractorOutputProtocol {
 }
 
-extension CartPresenter: CartTableAdapterOutput {
+extension CartPresenter: CartTableAdapterOutputProtocol {
     func tableReloadData() {
         view?.tableReloadData()
     }
     
     func sendProducts(_ products: [Product]) {
         interactor?.updateCart(products)
+        let price = totalSum(products)
+        view?.getTotalPrice(price: price)
     }
 }

@@ -6,3 +6,11 @@
 //
 
 import Foundation
+
+protocol DetailProductRouterInputProtocol {
+}
+
+final class DetailProductRouter: DetailProductRouterInputProtocol {
+    
+    weak var view: ScreenRoutable?
+}

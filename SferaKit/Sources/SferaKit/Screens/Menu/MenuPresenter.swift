@@ -21,7 +21,7 @@ final class MenuPresenter: MenuViewOutputProtocol {
         self.router = router
     }
     
-    func didTapCity() {
+    func cityButtonTapped() {
         print("tap")
     }
     
@@ -36,16 +36,14 @@ final class MenuPresenter: MenuViewOutputProtocol {
         view?.updateCategories(sortedCategories)
     }
     
-    func loadView() {
+    func fetchProducts() {
         interactor?.fetchProducts()
         interactor?.loadProducts()
     }
-
-    
 }
 
 extension MenuPresenter: MenuInteractorOutputProtocol {    
-    func receiveProducts(_ data: ProductsResponse) {
+    func fetchedProducts(_ data: ProductsResponse) {
         
         let productsItems = data.items.sorted(by: { first, second in
             return first.category > second.category
@@ -57,7 +55,7 @@ extension MenuPresenter: MenuInteractorOutputProtocol {
     }
 }
 
-extension MenuPresenter: MenuTableAdapterOutput {
+extension MenuPresenter: MenuTableAdapterOutputProtocol {
     func itemSelected(index: Int) {
         
         let product = products[index]

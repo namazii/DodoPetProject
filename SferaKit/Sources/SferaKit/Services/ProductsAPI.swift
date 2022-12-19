@@ -7,7 +7,11 @@
 
 import Foundation
 
-class ProductsAPI {
+protocol ProductsAPIInputProtocol {
+    func fetchCollection(completion: @escaping(ProductsResponse) -> Void)
+}
+
+class ProductsAPI: ProductsAPIInputProtocol {
     
     func fetchCollection(completion: @escaping(ProductsResponse) -> Void) {
         

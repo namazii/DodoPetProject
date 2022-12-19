@@ -1,5 +1,5 @@
 //
-//  ProductStoreManager.swift
+//  ProductRepository.swift
 //  test-sfera
 //
 //  Created by Назар Ткаченко on 27.11.2022.
@@ -8,7 +8,13 @@
 import Foundation
 import CoreData
 
-final class ProductStoreManager {
+protocol ProductRepositoryInputProtocol {
+    
+    func save(_ products: [Product])
+    func retrieve() -> [Product]    
+}
+
+final class ProductRepository: ProductRepositoryInputProtocol {
     
     lazy var persistentContainer: NSPersistentContainer = {
         
