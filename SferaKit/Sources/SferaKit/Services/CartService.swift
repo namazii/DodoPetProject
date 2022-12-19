@@ -7,12 +7,14 @@
 
 import Foundation
 
-public class CartService {
+protocol CartServiceInputProtocol {
+    func loadProducts()
     
-    public static let shared = CartService()
-    public init() {}
+}
+
+public class CartService: CartServiceInputProtocol {
     
-    private var productStoreManager = ProductStoreManager()
+    private var productStoreManager = ProductRepository()
     
     private var products: [Product] = []
     

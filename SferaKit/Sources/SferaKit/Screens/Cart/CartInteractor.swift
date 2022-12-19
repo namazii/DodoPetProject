@@ -22,12 +22,14 @@ final class CartInteractor: CartInteractorInputProtocol {
         self.presenter = presenter
     }
     
+    private var cartService = CartService()
+    
     func loadCart() -> [Product] {
-        let cartItems = CartService.shared.getProducts()
+        let cartItems = cartService.getProducts()
         return cartItems
     }
     
     func updateCart(_ products: [Product]) {
-        CartService.shared.updateProducts(model: products)
+        cartService.updateProducts(model: products)
     }
 }

@@ -8,20 +8,23 @@
 import Foundation
 
 protocol DetailProductInteractorInputProtocol {
-    func fetchProduct()
+    func addProductToCart(_ product: Product)
 }
 
 protocol DetailProductInteractorOutputProtocol: AnyObject {
-    func receiveProductsData(_ data: Product?)
 }
 
 final class DetailProductInteractor: DetailProductInteractorInputProtocol {
-    func fetchProduct() {
-    }
     
     weak var presenter: DetailProductInteractorOutputProtocol?
 
     required init(presenter: DetailProductInteractorOutputProtocol) {
         self.presenter = presenter
+    }
+    
+    private var cartService = CartService()
+    
+    func addProductToCart(_ product: Product) {
+        cartService.addProduct(model: product)
     }
 }

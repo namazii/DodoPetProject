@@ -15,8 +15,8 @@ protocol MenuViewInputProtocol: AnyObject {
 }
 
 protocol MenuViewOutputProtocol {
-    func loadView()
-    func didTapCity()
+    func fetchProducts()
+    func cityButtonTapped()
     func fetchCategories()
     var products: [Product] {get set}
 }
@@ -44,7 +44,7 @@ final class MenuViewController: UIViewController, ScreenRoutable {
         let view = UIView()
         
         view.backgroundColor = .clear
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapCity)))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cityButtonTapped)))
         
         return view
     }()
@@ -75,7 +75,7 @@ final class MenuViewController: UIViewController, ScreenRoutable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter?.loadView()
+        presenter?.fetchProducts()
 
         setupViews()
     }
@@ -118,7 +118,7 @@ final class MenuViewController: UIViewController, ScreenRoutable {
     }
     
     //MARK: - Actions
-    @objc private func didTapCity() {
+    @objc private func cityButtonTapped() {
         let popOverCityVC = CityPopOverAssembly().configure()
         popOverCityVC.modalPresentationStyle = .popover
         popOverCityVC.preferredContentSize = CGSize(width: 200, height: 200)

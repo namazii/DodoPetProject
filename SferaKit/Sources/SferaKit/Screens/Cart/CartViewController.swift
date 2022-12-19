@@ -12,14 +12,11 @@ protocol CartViewInputProtocol: AnyObject {
     func updateProducts(_ products: [Product])
     func getTotalPrice(price: String)
     func tableReloadData()
-//    func updateProducts(_ products: [Product])
 }
 
 protocol CartViewOutputProtocol {
-//    var products: [Product] {get set}
     func getCart()
     func didTapOrderButton()
-//    func updateProducts()
 }
 
 final class CartViewController: UIViewController, ScreenRoutable {
@@ -84,6 +81,7 @@ final class CartViewController: UIViewController, ScreenRoutable {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
         tableView.rowHeight = view.bounds.height / 5
         orderButton.layer.cornerRadius = orderButton.bounds.height / 2
     }
@@ -128,9 +126,7 @@ extension CartViewController: CartViewInputProtocol {
     func tableReloadData() {
         tableView.reloadData()
     }
-//    func updateProducts(_ products: [Product]) {
-//        tableAdapter.products = products
-//    }
+    
     func getTotalPrice(price: String) {
         orderButton.setTitle(price, for: .normal)
     }

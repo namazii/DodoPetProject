@@ -15,7 +15,6 @@ final class DetailProductTableAdapter: NSObject {
         case image = 0
         case info = 1
     }
-    
 }
 
 extension DetailProductTableAdapter: UITableViewDataSource {

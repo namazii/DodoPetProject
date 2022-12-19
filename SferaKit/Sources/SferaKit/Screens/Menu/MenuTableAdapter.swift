@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol MenuTableAdapterOutput: AnyObject {
+protocol MenuTableAdapterOutputProtocol: AnyObject {
     func itemSelected(index: Int)
 }
 
@@ -15,7 +15,7 @@ final class MenuTableAdapter: NSObject {
     
     var items: [Product] = []
     var categories: [String] = []
-    weak var presenter: MenuTableAdapterOutput?
+    weak var presenter: MenuTableAdapterOutputProtocol?
     weak var view: CategoriesViewDelegate?
 }
 

@@ -17,7 +17,6 @@ final class MenuAssembly: MenuAssemblyInputProtocol {
     func configure() -> MenuViewController {
         
         let tableAdapter = MenuTableAdapter()
-        
         let view = MenuViewController.init(tableAdapter: tableAdapter)
         
         tableAdapter.view = view
@@ -27,7 +26,10 @@ final class MenuAssembly: MenuAssemblyInputProtocol {
         
         tableAdapter.presenter = presenter
         
-        let interactor = MenuInteractor(presenter: presenter)
+        let productsAPI = ProductsAPI()
+        let cartService = CartService()
+        
+        let interactor = MenuInteractor(presenter: presenter, apiService: productsAPI, cartService: cartService)
         
         view.presenter = presenter
         presenter.interactor = interactor

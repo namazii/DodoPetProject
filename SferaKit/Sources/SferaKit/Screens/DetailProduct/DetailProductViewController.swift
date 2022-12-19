@@ -10,15 +10,14 @@ import SnapKit
 
 protocol DetailProductViewInputProtocol: AnyObject {
     func updateProduct(_ produc: Product?)
+    func priceСalculation(_ product: Product)
 }
 
 protocol DetailProductViewOutputProtocol {
-    func loadView()
-    var product: Product? {get set}
     func addToCart()
 }
 
-final class DetailProductViewController: UIViewController {
+final class DetailProductViewController: UIViewController, ScreenRoutable {
     
     var presenter: DetailProductViewOutputProtocol?
     
@@ -71,14 +70,12 @@ final class DetailProductViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter?.loadView()
-        
         setupViews()
-        priceСalculation()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         tableView.reloadData()
     }
     
@@ -95,11 +92,6 @@ final class DetailProductViewController: UIViewController {
     }
     
     //MARK: - Private Methods
-    private func priceСalculation() {
-        guard let product = presenter?.product else { return }
-        orderButton.setTitle("В корзину за \(product.price)$", for: .normal)
-    }
-    
     private func setupViews() {
         view.backgroundColor = .systemBackground
         
@@ -126,6 +118,10 @@ final class DetailProductViewController: UIViewController {
 
 //MARK: - DetailProductViewInputProtocol
 extension DetailProductViewController: DetailProductViewInputProtocol {
+    func priceСalculation(_ product: Product) {
+        orderButton.setTitle("В корзину за \(product.price)$", for: .normal)
+    }
+    
     func updateProduct(_ produc: Product?) {
         tableAdapter.product = produc
     }

@@ -13,27 +13,31 @@ protocol MenuInteractorInputProtocol {
 }
 
 protocol MenuInteractorOutputProtocol: AnyObject {
-    func receiveProducts(_ data: ProductsResponse)
+    func fetchedProducts(_ data: ProductsResponse)
 }
 
 final class MenuInteractor: MenuInteractorInputProtocol {
     
     weak var presenter: MenuInteractorOutputProtocol?
     
-    required init(presenter: MenuInteractorOutputProtocol) {
+    var productsAPI: ProductsAPIInputProtocol?
+    var repository: ProductRepository?
+    var cartService: CartServiceInputProtocol?
+    
+    required init(presenter: MenuInteractorOutputProtocol, apiService: ProductsAPIInputProtocol, cartService: CartServiceInputProtocol) {
         self.presenter = presenter
+        self.productsAPI = apiService
+        self.cartService = cartService
     }
     
-    private let productsAPI = ProductsAPI()
-    
     func loadProducts() {
-        CartService.shared.loadProducts()
+        cartService?.loadProducts()
     }
     
     //MARK: - Requests
     func fetchProducts() {
-        productsAPI.fetchCollection() { [weak self] result in
-            self?.presenter?.receiveProducts(result)
+        productsAPI?.fetchCollection() { [weak self] result in
+            self?.presenter?.fetchedProducts(result)
         }
     }
 }
