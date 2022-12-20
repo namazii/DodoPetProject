@@ -12,7 +12,7 @@ import SferaKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         setupWindow()
@@ -32,10 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, supportedInterfaceOrientationsFor window: UIWindow?) -> UIInterfaceOrientationMask {
         return self.orientationLock
-    }
-    
-    func applicationDidEnterBackground(_ application: UIApplication) {
-        CartService.shared.archiveProducts()
     }
 }
 

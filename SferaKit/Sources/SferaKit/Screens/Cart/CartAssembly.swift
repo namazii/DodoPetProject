@@ -19,6 +19,8 @@ final class CartAssembly: CartAssemblyInputProtocol {
         let view = CartViewController.init(tableAdapter: tableAdapter)
         let router = CartRouter()
         let presenter = CartPresenter.init(view: view, router: router)
+        
+        
         let interactor = CartInteractor(presenter: presenter)
         
         view.presenter = presenter

@@ -21,17 +21,16 @@ final class MenuInteractor: MenuInteractorInputProtocol {
     weak var presenter: MenuInteractorOutputProtocol?
     
     var productsAPI: ProductsAPIInputProtocol?
-    var repository: ProductRepository?
-    var cartService: CartServiceInputProtocol?
+    private var cartService: CartServiceInputProtocol
     
-    required init(presenter: MenuInteractorOutputProtocol, apiService: ProductsAPIInputProtocol, cartService: CartServiceInputProtocol) {
+    required init(presenter: MenuInteractorOutputProtocol, apiService: ProductsAPIInputProtocol, cartService: CartServiceInputProtocol = CartService.shared) {
         self.presenter = presenter
         self.productsAPI = apiService
         self.cartService = cartService
     }
     
     func loadProducts() {
-        cartService?.loadProducts()
+       let _ = cartService.loadProducts()
     }
     
     //MARK: - Requests

@@ -18,14 +18,15 @@ protocol CartInteractorOutputProtocol: AnyObject {
 final class CartInteractor: CartInteractorInputProtocol {
     weak var presenter: CartInteractorOutputProtocol?
     
-    required init(presenter: CartInteractorOutputProtocol) {
+    private var cartService: CartServiceInputProtocol
+    
+    required init(presenter: CartInteractorOutputProtocol, cartService: CartServiceInputProtocol = CartService.shared) {
         self.presenter = presenter
+        self.cartService = cartService
     }
     
-    private var cartService = CartService()
-    
     func loadCart() -> [Product] {
-        let cartItems = cartService.getProducts()
+        let cartItems = cartService.loadProducts()
         return cartItems
     }
     

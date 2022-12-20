@@ -16,7 +16,7 @@ protocol CityPopOverViewOutputProtocol {
     func loadView()
 }
 
-final class CityPopOverViewController: UIViewController {
+final class CityPopOverViewController: UIViewController, ScreenRoutable {
     
     var presenter: CityPopOverViewOutputProtocol?
     

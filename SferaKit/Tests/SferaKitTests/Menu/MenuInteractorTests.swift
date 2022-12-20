@@ -13,7 +13,7 @@ final class MenuInteractorTests: XCTestCase {
     func testFetchProductsServiceCalls() {
         let productResponse = Seeds.response
         let productsAPISpy = ProductsAPISpy(response: productResponse)
-        let sut = MenuInteractor(presenter: PresenterSpy(), apiService: productsAPISpy, cartService: CartService())
+        let sut = MenuInteractor(presenter: MenuPresenterSpy(), apiService: productsAPISpy, cartService: CartService())
         
         sut.fetchProducts()
         
@@ -24,11 +24,10 @@ final class MenuInteractorTests: XCTestCase {
         let productResponse = Seeds.response
         let productsAPISpy = ProductsAPISpy(response: productResponse)
         let cartServiceSpy = CartServiceSpy()
-        let sut = MenuInteractor(presenter: PresenterSpy(), apiService: productsAPISpy, cartService: cartServiceSpy)
+        let sut = MenuInteractor(presenter: MenuPresenterSpy(), apiService: productsAPISpy, cartService: cartServiceSpy)
         
         sut.loadProducts()
         
         XCTAssert(cartServiceSpy.loadProductsCalled, "loadProducts() should ask the cartServiceSpy to fetch response")
     }
-    
 }

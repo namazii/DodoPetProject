@@ -27,9 +27,8 @@ final class MenuAssembly: MenuAssemblyInputProtocol {
         tableAdapter.presenter = presenter
         
         let productsAPI = ProductsAPI()
-        let cartService = CartService()
         
-        let interactor = MenuInteractor(presenter: presenter, apiService: productsAPI, cartService: cartService)
+        let interactor = MenuInteractor(presenter: presenter, apiService: productsAPI)
         
         view.presenter = presenter
         presenter.interactor = interactor
