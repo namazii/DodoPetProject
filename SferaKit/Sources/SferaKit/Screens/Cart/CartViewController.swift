@@ -9,27 +9,37 @@ import UIKit
 import SnapKit
 
 protocol CartViewInputProtocol: AnyObject {
+    func updateProducts(_ products: [Product])
+    func getTotalPrice(price: String)
+    func tableReloadData()
 }
 
 protocol CartViewOutputProtocol {
-    var products: [Product] {get set}
     func getCart()
-    func didTapShowProductDetailCell()
-    func updateProducts()
+    func didTapOrderButton()
 }
 
-class CartViewController: UIViewController {
-
-    //MARK: - Private Properties
-    private let assembly: CartAssemblyInputProtocol = CartAssembly()
+final class CartViewController: UIViewController, ScreenRoutable {
     
+    var presenter: CartViewOutputProtocol?
+    
+    var tableAdapter: CartTableAdapter
+    
+    init(tableAdapter: CartTableAdapter) {
+        self.tableAdapter = tableAdapter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    //MARK: - Private Properties
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         
         tableView.register(CartCell.self, forCellReuseIdentifier: CartCell.reuseID)
-        tableView.dataSource = self
-        //tableView.delegate = self
-//        tableView.separatorStyle = .none
+        tableView.dataSource = tableAdapter
         
         return tableView
     }()
@@ -55,36 +65,30 @@ class CartViewController: UIViewController {
         return button
     }()
     
-    //MARK: - Public Properties
-    var presenter: CartViewOutputProtocol?
-    
-
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        assembly.configure(withView: self)
         
         setupView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         presenter?.getCart()
         tableView.reloadData()
     }
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
         tableView.rowHeight = view.bounds.height / 5
         orderButton.layer.cornerRadius = orderButton.bounds.height / 2
     }
     
     //MARK: - Actions
     @objc private func addOrder() {
-//        guard let product = product else { return }
-//        CartService.shared.addProduct(model: product)
-//        presentingViewController?.dismiss(animated: true)
+        presenter?.didTapOrderButton()
     }
     
     //MARK: - Private Methods
@@ -115,43 +119,15 @@ class CartViewController: UIViewController {
 
 //MARK: - CartViewInputProtocol
 extension CartViewController: CartViewInputProtocol {
-    
-}
-
-//MARK: - UITableViewDelegate
-extension CartViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        presenter?.products.count ?? 0
+    func updateProducts(_ products: [Product]) {
+        tableAdapter.products = products
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: CartCell.reuseID, for: indexPath) as? CartCell else { return UITableViewCell() }
-        guard let products = presenter?.products[indexPath.row] else { return CartCell() }
-        
-        cell.selectionStyle = .none
-        cell.delegate = self
-        cell.configure(model: products)
-        
-        return cell
+    func tableReloadData() {
+        tableView.reloadData()
     }
-}
-
-//MARK: - CartCellDelegate
-extension CartViewController: CartCellDelegate {
-    func cartCell(counter: Int, product: Product) {
-        
-        guard let productIndex = presenter?.products.firstIndex(where: {$0.id == product.id }) else { return }
-        
-        presenter?.products[productIndex].count = counter
-        
-        presenter?.updateProducts()
-        
-        if counter == 0 {
-            presenter?.products.remove(at: productIndex)
-            
-            tableView.reloadData()
-        }
-        
+    
+    func getTotalPrice(price: String) {
+        orderButton.setTitle(price, for: .normal)
     }
 }

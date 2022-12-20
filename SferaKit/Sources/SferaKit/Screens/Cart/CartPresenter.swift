@@ -7,30 +7,52 @@
 
 import Foundation
 
-class CartPresenter: CartViewOutputProtocol {
-    unowned private let view: CartViewInputProtocol
+final class CartPresenter: CartViewOutputProtocol {
     
-    init(view: CartViewInputProtocol) {
-        self.view = view
-    }
+    weak var view: CartViewInputProtocol?
     
+    var router: CartRouterInputProtocol?
     var interactor: CartInteractorInputProtocol?
     
-    var products: [Product] = []
+    init(view: CartViewInputProtocol, router: CartRouterInputProtocol) {
+        self.view = view
+        self.router = router
+    }
+    
+    private func totalSum(_ products: [Product]) -> String {
+        var totalPrice = 0
+        products.forEach { product in
+            totalPrice += (product.price * product.count)
+        }
+        return String(totalPrice)
+    }
     
     //MARK: - Methods    
-    func didTapShowProductDetailCell() {
-        //
-    }
-
-    func updateProducts() {
-        CartService.shared.updateProducts(model: products)
+    func didTapOrderButton() {
+        router?.showOrderProgress()
     }
     
     func getCart() {
-        products = CartService.shared.getProducts()
+        guard let cartItems = interactor?.loadCart() else { return }
+        
+        view?.updateProducts(cartItems)
+        
+        let price = totalSum(cartItems)
+        view?.getTotalPrice(price: price)
     }
 }
 
 extension CartPresenter: CartInteractorOutputProtocol {
+}
+
+extension CartPresenter: CartTableAdapterOutputProtocol {
+    func tableReloadData() {
+        view?.tableReloadData()
+    }
+    
+    func sendProducts(_ products: [Product]) {
+        interactor?.updateCart(products)
+        let price = totalSum(products)
+        view?.getTotalPrice(price: price)
+    }
 }

@@ -25,8 +25,8 @@ final class BannersCell: UICollectionViewCell {
     //MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupView()
         
+        setupView()
     }
     
     required init?(coder: NSCoder) {
@@ -51,7 +51,6 @@ final class BannersCell: UICollectionViewCell {
     
     //MARK: - Public Methods
     func configure(string: String) {
-//        imageView.image = UIImage(named: string)
         imageView.image = UIImage(named: string, in: .module, with: nil)
     }
 }

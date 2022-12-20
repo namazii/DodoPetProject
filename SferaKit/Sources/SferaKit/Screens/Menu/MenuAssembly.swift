@@ -8,22 +8,33 @@
 import Foundation
 
 protocol MenuAssemblyInputProtocol {
-    func configure(withView view: MenuViewController)
+    func configure() -> MenuViewController
 }
 
 
-class MenuAssembly: MenuAssemblyInputProtocol {
+final class MenuAssembly: MenuAssemblyInputProtocol {
     
-    func configure(withView view: MenuViewController) {
+    func configure() -> MenuViewController {
+        
+        let tableAdapter = MenuTableAdapter()
+        let view = MenuViewController.init(tableAdapter: tableAdapter)
+        
+        tableAdapter.view = view
         
         let router = MenuRouter()
-        
         let presenter = MenuPresenter.init(view: view, router: router)
-        let interactor = MenuInteractor(presenter: presenter)
+        
+        tableAdapter.presenter = presenter
+        
+        let productsAPI = ProductsAPI()
+        
+        let interactor = MenuInteractor(presenter: presenter, apiService: productsAPI)
         
         view.presenter = presenter
         presenter.interactor = interactor
         presenter.router = router
         router.view = view
+        
+        return view
     }
 }

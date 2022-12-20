@@ -8,6 +8,7 @@
 import Foundation
 
 final class ImageService {
+    
     static let shared = ImageService()
     private init() {}
     

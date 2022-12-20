@@ -25,7 +25,8 @@ final class BannersView: UIView {
     //MARK: - LifeCycle
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setupViews()
+        
+        setupViews()
     }
     
     required init?(coder: NSCoder) {
@@ -45,7 +46,6 @@ final class BannersView: UIView {
     }
     
     private func createPromotionsView()  -> NSCollectionLayoutSection {
-        
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
                                               heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -76,7 +76,6 @@ final class BannersView: UIView {
 
 //MARK: - DataSource
 extension BannersView: UICollectionViewDataSource {
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return banners.count
     }

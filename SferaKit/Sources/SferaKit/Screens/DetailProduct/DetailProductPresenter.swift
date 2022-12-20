@@ -7,46 +7,37 @@
 
 import Foundation
 
-protocol DetailModuleInput: AnyObject {
-    
+protocol DetailModuleInputProtocol: AnyObject {
     func configureModule(with product: Product)
 }
 
-class DetailProductPresenter: DetailProductViewOutputProtocol {
-    unowned private let view: DetailProductViewInputProtocol
+final class DetailProductPresenter: DetailProductViewOutputProtocol {
     
-//    var router: MenuRouter?
+    weak var view: DetailProductViewInputProtocol?
+    
+    var router: DetailProductRouterInputProtocol?
     var interactor: DetailProductInteractorInputProtocol?
-    
     
     var product: Product?
     
-    init(view: DetailProductViewInputProtocol) {
+    init(view: DetailProductViewInputProtocol, router: DetailProductRouterInputProtocol) {
         self.view = view
+        self.router = router
     }
     
     func addToCart() {
         guard let product = product else { return }
-        CartService.shared.addProduct(model: product)
-    }
-    
-    func loadView() {
-        interactor?.fetchProduct()
+        interactor?.addProductToCart(product)
     }
 }
 
 extension DetailProductPresenter: DetailProductInteractorOutputProtocol {
-    func receiveProductsData(_ data: Product?) {
-        self.product = data
-    }
 }
 
-extension DetailProductPresenter: DetailModuleInput {
-    
+extension DetailProductPresenter: DetailModuleInputProtocol {
     func configureModule(with product: Product) {
-        
         self.product = product
-        
-        view.updateProduct()
+        view?.updateProduct(product)
+        view?.priceСalculation(product)
     }
 }

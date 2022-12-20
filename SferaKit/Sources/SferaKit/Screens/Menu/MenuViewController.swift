@@ -9,24 +9,33 @@ import UIKit
 import SnapKit
 
 protocol MenuViewInputProtocol: AnyObject {
-    func updateProducts(_ banners: [String])
+    func updateBanners(_ banners: [String])
+    func updateProducts(_ products: [Product])
+    func updateCategories(_ categories: [String])
 }
 
 protocol MenuViewOutputProtocol {
-    //init(view: MenuViewInputProtocol,)
-    func loadView()
-    func didTapShowProductDetailCell(_ product: Product)
-    func didTapCity()
-    func fetchCategories() -> [String]
-    
+    func fetchProducts()
+//    func cityButtonTapped()
+    func fetchCategories()
     var products: [Product] {get set}
-   
 }
 
-class MenuViewController: UIViewController, ScreenRoutable {
+final class MenuViewController: UIViewController, ScreenRoutable {
     
-    //MARK: - Private Properties
-    private let assembly: MenuAssemblyInputProtocol = MenuAssembly()
+    var presenter: MenuViewOutputProtocol?
+
+    var tableAdapter: MenuTableAdapter
+    
+    init(tableAdapter: MenuTableAdapter) {
+        self.tableAdapter = tableAdapter
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     
     //MARK: - CityLabel
     private let cityLabel = UILabel(text: "Москва")
@@ -35,7 +44,7 @@ class MenuViewController: UIViewController, ScreenRoutable {
         let view = UIView()
         
         view.backgroundColor = .clear
-        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(didTapCity)))
+        view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(cityButtonTapped)))
         
         return view
     }()
@@ -49,28 +58,24 @@ class MenuViewController: UIViewController, ScreenRoutable {
     }()
     
     //MARK: - TableView
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         
         tableView.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseID)
-        tableView.dataSource = self
-        tableView.delegate = self
+        tableView.dataSource = tableAdapter
+        tableView.delegate = tableAdapter
         tableView.tableHeaderView = bannerHeaderView
         tableView.separatorStyle = .none
         
         return tableView
     }()
-    
-    //MARK: - Properties
-    var presenter: MenuViewOutputProtocol?
-    
+
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        assembly.configure(withView: self)
         
-        presenter?.loadView()
+        presenter?.fetchProducts()
 
         setupViews()
     }
@@ -113,13 +118,8 @@ class MenuViewController: UIViewController, ScreenRoutable {
     }
     
     //MARK: - Actions
-    @objc private func didTapCity() {
-        
-        //presenter?.didTapCity()
-        
-        //presenter.router?.showCities(imageView: chevronImageView)
-        
-        let popOverCityVC = CityPopOverViewController()
+    @objc private func cityButtonTapped() {
+        let popOverCityVC = CityPopOverAssembly().configure()
         popOverCityVC.modalPresentationStyle = .popover
         popOverCityVC.preferredContentSize = CGSize(width: 200, height: 200)
 
@@ -133,61 +133,40 @@ class MenuViewController: UIViewController, ScreenRoutable {
     }
 }
 
-//MARK: - UIPopoverPresentationControllerDelegate
-extension MenuViewController: UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        .none
-    }
-}
-
-//MARK: - MenuViewInputProtocol
-extension MenuViewController: MenuViewInputProtocol {
-    func updateProducts(_ banners: [String]) {
-        self.bannerHeaderView.update(bannersString: banners)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
-    }
-}
-
-//MARK: - DataSource, Delegate
-extension MenuViewController: UITableViewDataSource, UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let product = presenter?.products[indexPath.row] else { return }
-        presenter?.didTapShowProductDetailCell(product)
-    }
-
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let categories = presenter?.fetchCategories()
-        let categoriesView = CategoriesView(categories: categories ?? [])
-        categoriesView .delegate = self
-        
-        return categoriesView
-    }
-
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return presenter?.products.count ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductCell.reuseID, for: indexPath) as? ProductCell else { return UITableViewCell() }
-        if let products = presenter?.products[indexPath.row] {
-            cell.configure(model: products)
-        }
-        
-        return cell
-    }
-}
-
-//MARK: - ScrollToCategoryViewDelegate
-extension MenuViewController: ScrollToCategoryViewDelegate {
+//MARK: - CategoriesViewDelegate
+extension MenuViewController: CategoriesViewDelegate {
     func scrollToRow(with category: String) {
         guard let index = presenter?.products.firstIndex(where: {$0.category == category}) else { return }
         tableView.scrollToRow(at: IndexPath(row: index, section: 0) , at: .top, animated: true)
     }
 }
+
+
+//MARK: - UIPopoverPresentationControllerDelegate
+extension MenuViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+}
+
+//MARK: - MenuViewInputProtocol
+extension MenuViewController: MenuViewInputProtocol {
+    
+    func updateProducts(_ products: [Product]) {
+        tableAdapter.items = products
+        presenter?.fetchCategories()
+        tableView.reloadData()
+    }
+    
+    func updateCategories(_ categories: [String]) {
+        tableAdapter.categories = categories
+        tableView.reloadData()
+    }
+    
+    func updateBanners(_ banners: [String]) {
+        self.bannerHeaderView.update(bannersString: banners)
+        self.tableView.reloadData()
+    }
+}
+
+

@@ -7,22 +7,20 @@
 
 import UIKit
 
-public class MainTabVC: UITabBarController {
+public final class MainTabVC: UITabBarController {
     public override func viewDidLoad() {
         super.viewDidLoad()
 
         tabBar.tintColor = .tabBarItemAccent
         tabBar.unselectedItemTintColor = .tabBarItemLight
         
-        let menuVC = MenuViewController()
+        let menuVC = MenuAssembly().configure()
         menuVC.tabBarItem = setupTabBarItem(image: "menu", title: "Меню")
-        let cartVC = CartViewController()
+        let cartVC = CartAssembly().configure()
         cartVC.tabBarItem = setupTabBarItem(image: "basket", title: "Корзина")
 
 
         let menuNav = UINavigationController(rootViewController: menuVC)
-//        let basketNav = UINavigationController(rootViewController: basketVC)
-
 
         self.viewControllers = [menuNav, cartVC]
     }

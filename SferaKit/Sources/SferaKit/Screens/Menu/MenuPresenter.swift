@@ -7,53 +7,59 @@
 
 import Foundation
 
-class MenuPresenter: MenuViewOutputProtocol {
-    unowned private let view: MenuViewInputProtocol
+final class MenuPresenter: MenuViewOutputProtocol {
     
-    var router: MenuRouter
+    weak var view: MenuViewInputProtocol?
+    
+    var router: MenuRouterInputProtocol?
     var interactor: MenuInteractorInputProtocol?
     
     var products: [Product] = []
     
-    init(view: MenuViewInputProtocol, router: MenuRouter) {
+    init(view: MenuViewInputProtocol, router: MenuRouterInputProtocol) {
         self.view = view
         self.router = router
     }
     
-    func didTapCity() {
-        print("tap")
-    }
+//    func cityButtonTapped() {
+//        print("tap")
+//    }
     
-    func fetchCategories() -> [String] {
+    func fetchCategories() {
         var category: Set<String> = []
         for product in products {
             category.insert(product.category)
         }
         
-        let arr = [String](category).sorted(by: >)
+        let sortedCategories = [String](category).sorted(by: >)
         
-        return arr
+        view?.updateCategories(sortedCategories)
     }
     
-    func loadView() {
+    func fetchProducts() {
         interactor?.fetchProducts()
         interactor?.loadProducts()
-    }
-    
-    func didTapShowProductDetailCell(_ product: Product) {
-        router.showProductDetail(product: product)
     }
 }
 
 extension MenuPresenter: MenuInteractorOutputProtocol {    
-    func receiveProductsData(_ data: ProductsResponse) {
-        let productsData = data.items.sorted(by: { first, second in
+    func fetchedProducts(_ data: ProductsResponse) {
+        
+        let productsItems = data.items.sorted(by: { first, second in
             return first.category > second.category
         })
         
+        products = productsItems
+        view?.updateBanners(data.banners)
+        view?.updateProducts(productsItems)
+    }
+}
+
+extension MenuPresenter: MenuTableAdapterOutputProtocol {
+    func itemSelected(index: Int) {
         
+        let product = products[index]
+        router?.showProductDetail(product: product)
         
-        products = productsData
-        view.updateProducts(data.banners)
     }
 }

@@ -8,8 +8,7 @@
 import UIKit
 import SnapKit
 
-class CityPopOverCell: UITableViewCell {
-    
+final class CityPopOverCell: UITableViewCell {
     static let reuseID = "CityPopOverCell"
     
     //MARK: - Private Methods
@@ -25,6 +24,7 @@ class CityPopOverCell: UITableViewCell {
     //MARK: - LifeCycle
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         setupView()
     }
     

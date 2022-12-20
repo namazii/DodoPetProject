@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		BC5F4D022933CF2000D29F62 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC5F4D012933CF2000D29F62 /* AppDelegate.swift */; };
 		BC5F4D1E2933D2CA00D29F62 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = BC5F4D1D2933D2CA00D29F62 /* SnapKit */; };
+		BC7A9F6E294A022F00F40249 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC7A9F6D294A022F00F40249 /* LaunchScreen.storyboard */; };
 		BCFD093D29421EAF00814DBB /* SferaKit in Frameworks */ = {isa = PBXBuildFile; productRef = BCFD093C29421EAF00814DBB /* SferaKit */; };
 /* End PBXBuildFile section */
 
@@ -16,6 +17,7 @@
 		BC5F4CFE2933CF2000D29F62 /* test-sfera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test-sfera.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC5F4D012933CF2000D29F62 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC5F4D0F2933CF2000D29F62 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BC7A9F6D294A022F00F40249 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BCFD093A29421E0000814DBB /* SferaKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SferaKit; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,8 +56,8 @@
 			isa = PBXGroup;
 			children = (
 				BC5F4D152933D04800D29F62 /* App */,
-				BC5F4D162933D06000D29F62 /* Screens */,
 				BC5F4D0F2933CF2000D29F62 /* Info.plist */,
+				BC7A9F6D294A022F00F40249 /* LaunchScreen.storyboard */,
 			);
 			path = "test-sfera";
 			sourceTree = "<group>";
@@ -66,93 +68,6 @@
 				BC5F4D012933CF2000D29F62 /* AppDelegate.swift */,
 			);
 			path = App;
-			sourceTree = "<group>";
-		};
-		BC5F4D162933D06000D29F62 /* Screens */ = {
-			isa = PBXGroup;
-			children = (
-				BC5F4D192933D27100D29F62 /* Menu */,
-				BC5F4D272933D39600D29F62 /* DetailProduct */,
-				BC5F4D282933D3B200D29F62 /* Cart */,
-			);
-			path = Screens;
-			sourceTree = "<group>";
-		};
-		BC5F4D192933D27100D29F62 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				BC5F4D292933D3DC00D29F62 /* ProductCell */,
-				BC5F4D2A2933D3F200D29F62 /* SubViews */,
-			);
-			name = Menu;
-			sourceTree = "<group>";
-		};
-		BC5F4D272933D39600D29F62 /* DetailProduct */ = {
-			isa = PBXGroup;
-			children = (
-				BC5F4D442933D66900D29F62 /* SubViews */,
-			);
-			name = DetailProduct;
-			sourceTree = "<group>";
-		};
-		BC5F4D282933D3B200D29F62 /* Cart */ = {
-			isa = PBXGroup;
-			children = (
-				BC5F4D552933D83200D29F62 /* SubViews */,
-			);
-			name = Cart;
-			sourceTree = "<group>";
-		};
-		BC5F4D292933D3DC00D29F62 /* ProductCell */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = ProductCell;
-			sourceTree = "<group>";
-		};
-		BC5F4D2A2933D3F200D29F62 /* SubViews */ = {
-			isa = PBXGroup;
-			children = (
-				BC5F4D2D2933D44000D29F62 /* CityPopOver */,
-				BC5F4D2E2933D44F00D29F62 /* HeaderView */,
-			);
-			name = SubViews;
-			sourceTree = "<group>";
-		};
-		BC5F4D2D2933D44000D29F62 /* CityPopOver */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = CityPopOver;
-			sourceTree = "<group>";
-		};
-		BC5F4D2E2933D44F00D29F62 /* HeaderView */ = {
-			isa = PBXGroup;
-			children = (
-				BC5F4D3D2933D5AC00D29F62 /* SubVIews */,
-			);
-			name = HeaderView;
-			sourceTree = "<group>";
-		};
-		BC5F4D3D2933D5AC00D29F62 /* SubVIews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = SubVIews;
-			sourceTree = "<group>";
-		};
-		BC5F4D442933D66900D29F62 /* SubViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = SubViews;
-			sourceTree = "<group>";
-		};
-		BC5F4D552933D83200D29F62 /* SubViews */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = SubViews;
 			sourceTree = "<group>";
 		};
 		BCFD093B29421EAF00814DBB /* Frameworks */ = {
@@ -227,6 +142,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BC7A9F6E294A022F00F40249 /* LaunchScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

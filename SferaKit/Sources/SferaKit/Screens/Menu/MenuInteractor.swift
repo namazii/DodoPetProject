@@ -8,44 +8,35 @@
 import Foundation
 
 protocol MenuInteractorInputProtocol {
-    init(presenter: MenuInteractorOutputProtocol)
     func fetchProducts()
     func loadProducts()
 }
 
 protocol MenuInteractorOutputProtocol: AnyObject {
-    func receiveProductsData(_ data: ProductsResponse)
+    func fetchedProducts(_ data: ProductsResponse)
 }
 
-
-class MenuInteractor: MenuInteractorInputProtocol {
-    unowned private let presenter: MenuInteractorOutputProtocol
+final class MenuInteractor: MenuInteractorInputProtocol {
     
-    required init(presenter: MenuInteractorOutputProtocol) {
+    weak var presenter: MenuInteractorOutputProtocol?
+    
+    var productsAPI: ProductsAPIInputProtocol?
+    private var cartService: CartServiceInputProtocol
+    
+    required init(presenter: MenuInteractorOutputProtocol, apiService: ProductsAPIInputProtocol, cartService: CartServiceInputProtocol = CartService.shared) {
         self.presenter = presenter
+        self.productsAPI = apiService
+        self.cartService = cartService
     }
     
-    private let productsAPI = ProductsAPI()
-    
     func loadProducts() {
-        CartService.shared.loadProducts()
+       let _ = cartService.loadProducts()
     }
     
     //MARK: - Requests
-
     func fetchProducts() {
-        Task {
-            do {
-                if #available(iOS 15.0, *) {
-                    let result = try await productsAPI.fetchCollection()
-                    presenter.receiveProductsData(result)
-                } else {
-                    // Fallback on earlier versions
-                } //Запрос в сеть
-                
-            } catch {
-                print(error)
-            }
+        productsAPI?.fetchCollection() { [weak self] result in
+            self?.presenter?.fetchedProducts(result)
         }
     }
 }

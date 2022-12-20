@@ -7,28 +7,36 @@
 
 import Foundation
 
-public class CartService {
-    public static let shared = CartService()
-    public init() {}
+protocol CartServiceInputProtocol {
+    func loadProducts() -> [Product]
     
-    private var productStoreManager = ProductStoreManager()
+    func addProduct(model: Product)
+    func updateProducts(model: [Product])
+    func deleteProduct(model: Product)
+    
+    
+}
+
+public class CartService: CartServiceInputProtocol {
+    
+    private var productRepository = ProductRepository()
     
     private var products: [Product] = []
     
+    static let shared = CartService()
+    
     var order: Order?
     
-    public func archiveProducts() {
+    private func saveProducts() {
         
-        print(products)
-        productStoreManager.save(products)
-        
-        print("Save Products OK")
+        productRepository.save(products)
     }
     
     func addProduct(model: Product) {
-        print("addProduct")
-        print(model)
-        
+        defer {
+            print(#function)
+            saveProducts()
+        }
         
         if products.isEmpty {
             products.append(model)
@@ -44,16 +52,14 @@ public class CartService {
         }
         
         if let productIndex = productIndex {
-            
             products[productIndex].count += 1
-            print(products)
-            
-            //let productInCart = products[productIndex]
             return
         }
     }
     
     func updateProducts(model: [Product]) {
+        defer { saveProducts() }
+        
         var productArray: [Product] = []
         for i in model {
             if i.count != 0 {
@@ -64,22 +70,20 @@ public class CartService {
     }
     
     func deleteProduct(model: Product) {
+        defer { saveProducts() }
+        
         guard let index = products.firstIndex(where: {$0.id == model.id}) else { return }
         products.remove(at: index)
     }
     
-    func getProducts() -> [Product] {
-        print(products)
-        return products
-    }
-    
-    func loadProducts() {
-        print(products)
+    func loadProducts() -> [Product] {
+        
         if products.isEmpty {
-            let data = productStoreManager.retrieve()
+            let data = productRepository.retrieve()
             products.append(contentsOf: data)
         }
-        print(products)
+        
+        return products
     }
     
     func createOrder() -> Order {

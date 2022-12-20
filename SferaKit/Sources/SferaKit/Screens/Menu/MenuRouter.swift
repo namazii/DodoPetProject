@@ -7,15 +7,14 @@
 
 import UIKit
 
-protocol MenuRouterInput {
-    
+protocol MenuRouterInputProtocol {
+    func showProductDetail(product: Product)
 }
 
-protocol MenuRouterOutput {
-    
+protocol MenuRouterOutputProtocol {
 }
 
-class MenuRouter: MenuRouterInput {
+final class MenuRouter: MenuRouterInputProtocol {
     
     weak var view: ScreenRoutable?
     
@@ -26,22 +25,5 @@ class MenuRouter: MenuRouterInput {
         view?.presentScreen(vc, animated: true, completion: nil)
     }
     
-//    func showCities(imageView: UIImageView) {
-//        //let vc = CityPopOverAssembly().configure()
-//        
-//        let popOverCityVC = CityPopOverViewController()
-//        popOverCityVC.modalPresentationStyle = .popover
-//        popOverCityVC.preferredContentSize = CGSize(width: 200, height: 200)
-//        
-//        guard let presentionVC = popOverCityVC.popoverPresentationController else { return }
-//        presentionVC.delegate = view as! any UIPopoverPresentationControllerDelegate
-//        presentionVC.sourceView = imageView
-//        presentionVC.permittedArrowDirections = .up
-//        presentionVC.sourceRect = CGRect(x: imageView.bounds.midX,
-//                                         y: imageView.bounds.midY, width: 0, height: 0)
-//        //view?.present(popOverCityVC, animated: true)
-//        
-//        view?.presentScreen(popOverCityVC, animated: true, completion: nil)
-//        
-//    }
+    
 }
