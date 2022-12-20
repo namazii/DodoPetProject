@@ -18,12 +18,14 @@ final class CityPopOverAssembly: CityPopOverAssemblyInputProtocol {
         
         let view = CityPopOverViewController.init(tableAdapter: tableAdapter)
         
-        let presenter = CityPopOverPresenter.init(view: view)
-        
+        let router = CityPopOverRouter()
+        let presenter = CityPopOverPresenter.init(view: view, router: router)
         let interactor = CityPopOverInteractor.init(presenter: presenter)
         
         view.presenter = presenter
         presenter.interactor = interactor
+        presenter.router = router
+        router.view = view
         
         return view
     }

@@ -16,7 +16,7 @@ protocol MenuViewInputProtocol: AnyObject {
 
 protocol MenuViewOutputProtocol {
     func fetchProducts()
-    func cityButtonTapped()
+//    func cityButtonTapped()
     func fetchCategories()
     var products: [Product] {get set}
 }
@@ -58,7 +58,7 @@ final class MenuViewController: UIViewController, ScreenRoutable {
     }()
     
     //MARK: - TableView
-    private lazy var tableView: UITableView = {
+    lazy var tableView: UITableView = {
         let tableView = UITableView()
         
         tableView.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseID)
@@ -165,9 +165,7 @@ extension MenuViewController: MenuViewInputProtocol {
     
     func updateBanners(_ banners: [String]) {
         self.bannerHeaderView.update(bannersString: banners)
-        DispatchQueue.main.async {
-            self.tableView.reloadData()
-        }
+        self.tableView.reloadData()
     }
 }
 

@@ -17,12 +17,12 @@ protocol DetailProductInteractorOutputProtocol: AnyObject {
 final class DetailProductInteractor: DetailProductInteractorInputProtocol {
     
     weak var presenter: DetailProductInteractorOutputProtocol?
+    private var cartService: CartServiceInputProtocol
 
-    required init(presenter: DetailProductInteractorOutputProtocol) {
+    required init(presenter: DetailProductInteractorOutputProtocol, cartService: CartServiceInputProtocol = CartService.shared) {
         self.presenter = presenter
+        self.cartService = cartService
     }
-    
-    private var cartService = CartService()
     
     func addProductToCart(_ product: Product) {
         cartService.addProduct(model: product)

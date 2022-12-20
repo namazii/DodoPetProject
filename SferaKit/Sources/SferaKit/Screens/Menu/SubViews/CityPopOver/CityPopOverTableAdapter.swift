@@ -12,6 +12,9 @@ final class CityPopOverTableAdapter: NSObject {
 }
 
 extension CityPopOverTableAdapter: UITableViewDelegate {
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        cities[indexPath.row]
+//    }
 }
 
 extension CityPopOverTableAdapter: UITableViewDataSource {

@@ -5,4 +5,12 @@
 //  Created by Назар Ткаченко on 27.11.2022.
 //
 
-import Foundation
+import UIKit
+
+protocol CityPopOverRouterInputProtocol {
+}
+
+final class CityPopOverRouter: CityPopOverRouterInputProtocol {
+    weak var view: ScreenRoutable?
+    
+}

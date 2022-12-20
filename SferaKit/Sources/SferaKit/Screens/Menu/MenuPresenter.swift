@@ -21,9 +21,9 @@ final class MenuPresenter: MenuViewOutputProtocol {
         self.router = router
     }
     
-    func cityButtonTapped() {
-        print("tap")
-    }
+//    func cityButtonTapped() {
+//        print("tap")
+//    }
     
     func fetchCategories() {
         var category: Set<String> = []
@@ -62,6 +62,4 @@ extension MenuPresenter: MenuTableAdapterOutputProtocol {
         router?.showProductDetail(product: product)
         
     }
-    
-    
 }

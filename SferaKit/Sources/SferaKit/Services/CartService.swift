@@ -8,23 +8,36 @@
 import Foundation
 
 protocol CartServiceInputProtocol {
-    func loadProducts()
+    func loadProducts() -> [Product]
+    
+    func addProduct(model: Product)
+    func updateProducts(model: [Product])
+    func deleteProduct(model: Product)
+    
     
 }
 
 public class CartService: CartServiceInputProtocol {
     
-    private var productStoreManager = ProductRepository()
+    private var productRepository = ProductRepository()
     
     private var products: [Product] = []
     
+    static let shared = CartService()
+    
     var order: Order?
     
-    public func archiveProducts() {
-        productStoreManager.save(products)
+    private func saveProducts() {
+        
+        productRepository.save(products)
     }
     
     func addProduct(model: Product) {
+        defer {
+            print(#function)
+            saveProducts()
+        }
+        
         if products.isEmpty {
             products.append(model)
             return
@@ -39,15 +52,14 @@ public class CartService: CartServiceInputProtocol {
         }
         
         if let productIndex = productIndex {
-            
             products[productIndex].count += 1
-            
-            //let productInCart = products[productIndex]
             return
         }
     }
     
     func updateProducts(model: [Product]) {
+        defer { saveProducts() }
+        
         var productArray: [Product] = []
         for i in model {
             if i.count != 0 {
@@ -58,19 +70,20 @@ public class CartService: CartServiceInputProtocol {
     }
     
     func deleteProduct(model: Product) {
+        defer { saveProducts() }
+        
         guard let index = products.firstIndex(where: {$0.id == model.id}) else { return }
         products.remove(at: index)
     }
     
-    func getProducts() -> [Product] {
-        return products
-    }
-    
-    func loadProducts() {
+    func loadProducts() -> [Product] {
+        
         if products.isEmpty {
-            let data = productStoreManager.retrieve()
+            let data = productRepository.retrieve()
             products.append(contentsOf: data)
         }
+        
+        return products
     }
     
     func createOrder() -> Order {

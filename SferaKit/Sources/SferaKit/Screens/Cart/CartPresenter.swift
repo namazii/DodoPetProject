@@ -34,6 +34,7 @@ final class CartPresenter: CartViewOutputProtocol {
     
     func getCart() {
         guard let cartItems = interactor?.loadCart() else { return }
+        
         view?.updateProducts(cartItems)
         
         let price = totalSum(cartItems)

@@ -11,11 +11,12 @@ final class CityPopOverPresenter: CityPopOverViewOutputProtocol {
     
     weak var view: CityPopOverViewInputProtocol?
     
-//    var router:
+    var router: CityPopOverRouterInputProtocol?
     var interactor: CityPopOverInteractorInputProtocol?
     
-    init(view: CityPopOverViewInputProtocol) {
+    init(view: CityPopOverViewInputProtocol, router: CityPopOverRouterInputProtocol) {
         self.view = view
+        self.router = router
     }
     
     func loadView() {
