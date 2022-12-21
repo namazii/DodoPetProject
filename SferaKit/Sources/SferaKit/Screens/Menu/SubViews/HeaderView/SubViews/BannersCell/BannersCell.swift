@@ -16,9 +16,6 @@ final class BannersCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let image = UIImageView()
         
-        image.image = UIImage(named: "banner1")
-        image.contentMode = .scaleAspectFill
-        
         return image
     }()
     
@@ -33,25 +30,22 @@ final class BannersCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    //MARK: - Public Methods
+    func configure(string: String) {
+        imageView.image = UIImage(named: string, in: .module, with: nil)
+    }
+    
     //MARK: - Private Methods
     private func setupView() {
-        
         backgroundColor = .systemBackground
-        
         
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 10
-        
         
         addSubview(imageView)
         imageView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
         }
-    }
-    
-    //MARK: - Public Methods
-    func configure(string: String) {
-        imageView.image = UIImage(named: string, in: .module, with: nil)
     }
 }
 
