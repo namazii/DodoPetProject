@@ -62,6 +62,7 @@ final class MenuViewController: UIViewController, ScreenRoutable {
         let tableView = UITableView()
         
         tableView.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseID)
+        tableView.register(MenuSkeletonCell.self, forCellReuseIdentifier: MenuSkeletonCell.reuseID)
         tableView.dataSource = tableAdapter
         tableView.delegate = tableAdapter
         tableView.tableHeaderView = bannerHeaderView
@@ -154,18 +155,21 @@ extension MenuViewController: MenuViewInputProtocol {
     
     func updateProducts(_ products: [Product]) {
         tableAdapter.items = products
+        tableAdapter.loaded = true
         presenter?.fetchCategories()
         tableView.reloadData()
     }
     
     func updateCategories(_ categories: [String]) {
         tableAdapter.categories = categories
+        tableAdapter.loaded = true
         tableView.reloadData()
     }
     
     func updateBanners(_ banners: [String]) {
-        self.bannerHeaderView.update(bannersString: banners)
-        self.tableView.reloadData()
+        bannerHeaderView.update(bannersString: banners)
+        
+        tableView.reloadData()
     }
 }
 

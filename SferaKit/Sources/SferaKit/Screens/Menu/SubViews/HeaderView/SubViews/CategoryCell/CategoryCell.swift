@@ -19,7 +19,7 @@ final class CategoryCell: UICollectionViewCell {
         label.numberOfLines = 1
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
-        label.textColor = UIColor(red: 0.992, green: 0.227, blue: 0.412, alpha: 0.4)
+        label.textColor = .gray
         
         return label
     }()
@@ -27,11 +27,11 @@ final class CategoryCell: UICollectionViewCell {
     override var isSelected: Bool {
         didSet {
             if isSelected {
-                contentView.backgroundColor = UIColor(red: 0.992, green: 0.227, blue: 0.412, alpha: 0.2)
-                titleLabel.textColor = UIColor(red: 0.992, green: 0.227, blue: 0.412, alpha: 1)
+                contentView.backgroundColor = #colorLiteral(red: 0.9151502848, green: 0.5302934647, blue: 0.004759409465, alpha: 1)
+                titleLabel.textColor = .white
             } else {
                 contentView.backgroundColor = .systemBackground
-                titleLabel.textColor = UIColor(red: 0.992, green: 0.227, blue: 0.412, alpha: 0.4)
+                titleLabel.textColor = .black
             }
         }
     }
@@ -47,22 +47,22 @@ final class CategoryCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - Public Methods
+    func configure(category: String) {
+        titleLabel.text = category
+    }
+    
     //MARK: - Private Methods
     private func setupViews() {
         backgroundColor = .systemBackground
         
         contentView.layer.borderWidth = 1
-        contentView.layer.borderColor = UIColor(red: 0.992, green: 0.227, blue: 0.412, alpha: 0.4).cgColor
+        contentView.layer.borderColor = #colorLiteral(red: 0.9151502848, green: 0.5302934647, blue: 0.004759409465, alpha: 1)
         contentView.layer.cornerRadius = contentView.frame.height / 2
         
         contentView.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8))
         }
-    }
-    
-    //MARK: - Public Methods
-    func configure(category: String) {
-        titleLabel.text = category
     }
 }
