@@ -26,5 +26,4 @@ extension ProductEntity {
 }
 
 extension ProductEntity : Identifiable {
-    
 }

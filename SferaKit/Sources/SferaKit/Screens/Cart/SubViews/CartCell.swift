@@ -81,6 +81,12 @@ final class CartCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        infoLabel.font = .systemFont(ofSize: contentView.frame.height / 11)
+    }
+    
     //MARK: - Private Methods
     private func setupViews() {
         contentView.addSubview(productImageView)

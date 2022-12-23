@@ -47,14 +47,13 @@ extension DetailProductTableAdapter: UITableViewDataSource {
             
             cell.configure(image: product?.image ?? "pizza")
             return cell
-        case .info:
+            
+        default:
             let infoCell = tableView.dequeueReusableCell(withIdentifier: ProductInfoCell.reuseID)
             guard let cell = infoCell as? ProductInfoCell else { return UITableViewCell() }
             
             cell.configure(product: product)
             return cell
-        default:
-            return UITableViewCell()
         }
     }
 }

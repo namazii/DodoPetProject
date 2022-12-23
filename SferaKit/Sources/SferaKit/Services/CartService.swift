@@ -9,32 +9,26 @@ import Foundation
 
 protocol CartServiceInputProtocol {
     func loadProducts() -> [Product]
-    
     func addProduct(model: Product)
     func updateProducts(model: [Product])
     func deleteProduct(model: Product)
-    
-    
 }
 
-public class CartService: CartServiceInputProtocol {
+final class CartService: CartServiceInputProtocol {
+    static let shared = CartService()
     
     private var productRepository = ProductRepository()
     
     private var products: [Product] = []
     
-    static let shared = CartService()
-    
     var order: Order?
     
     private func saveProducts() {
-        
         productRepository.save(products)
     }
     
     func addProduct(model: Product) {
         defer {
-            print(#function)
             saveProducts()
         }
         
@@ -43,7 +37,6 @@ public class CartService: CartServiceInputProtocol {
             return
         }
         
-        //Index - get element, write element
         let productIndex = products.firstIndex(where: { $0.id == model.id })
         
         if productIndex == nil {
@@ -77,22 +70,11 @@ public class CartService: CartServiceInputProtocol {
     }
     
     func loadProducts() -> [Product] {
-        
         if products.isEmpty {
             let data = productRepository.retrieve()
             products.append(contentsOf: data)
         }
         
         return products
-    }
-    
-    func createOrder() -> Order {
-        var sum = 0
-        for product in products {
-            sum += product.price
-        }
-        let order = Order(products: products, totalSum: String(sum), deliveryMethod: "manual", time: "25 Sen 2017 21:11:55 GMT", name: "Антон", phone: "+7999999999", address: "Казань, Меридианная 4")
-        
-        return order
     }
 }

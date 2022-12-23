@@ -16,12 +16,14 @@ public final class MainTabVC: UITabBarController {
         
         let menuVC = MenuAssembly().configure()
         menuVC.tabBarItem = setupTabBarItem(image: "menu", title: "Меню")
+        
         let cartVC = CartAssembly().configure()
         cartVC.tabBarItem = setupTabBarItem(image: "basket", title: "Корзина")
 
-
+        
         let menuNav = UINavigationController(rootViewController: menuVC)
 
+        
         self.viewControllers = [menuNav, cartVC]
     }
 

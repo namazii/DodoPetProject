@@ -16,7 +16,6 @@ protocol MenuViewInputProtocol: AnyObject {
 
 protocol MenuViewOutputProtocol {
     func fetchProducts()
-//    func cityButtonTapped()
     func fetchCategories()
     var products: [Product] {get set}
 }
@@ -61,6 +60,7 @@ final class MenuViewController: UIViewController, ScreenRoutable {
     lazy var tableView: UITableView = {
         let tableView = UITableView()
         
+        tableView.allowsSelection = false
         tableView.register(ProductCell.self, forCellReuseIdentifier: ProductCell.reuseID)
         tableView.register(MenuSkeletonCell.self, forCellReuseIdentifier: MenuSkeletonCell.reuseID)
         tableView.dataSource = tableAdapter
@@ -120,9 +120,10 @@ final class MenuViewController: UIViewController, ScreenRoutable {
     
     //MARK: - Actions
     @objc private func cityButtonTapped() {
-        let popOverCityVC = CityPopOverAssembly().configure()
+        let popOverCityVC = CityPopOverViewController()
         popOverCityVC.modalPresentationStyle = .popover
         popOverCityVC.preferredContentSize = CGSize(width: 200, height: 200)
+        popOverCityVC.delegate = self
 
         guard let presentionVC = popOverCityVC.popoverPresentationController else { return }
         presentionVC.delegate = self
@@ -150,10 +151,18 @@ extension MenuViewController: UIPopoverPresentationControllerDelegate {
     }
 }
 
+extension MenuViewController: CityPopOverViewOutputProtocol {
+    func selectedСity(_ string: String) {
+        cityLabel.animateViewPress()
+        cityLabel.text = string
+    }
+}
+
 //MARK: - MenuViewInputProtocol
 extension MenuViewController: MenuViewInputProtocol {
     
     func updateProducts(_ products: [Product]) {
+        tableView.allowsSelection = true
         tableAdapter.items = products
         tableAdapter.loaded = true
         presenter?.fetchCategories()

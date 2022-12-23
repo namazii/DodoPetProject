@@ -7,7 +7,6 @@
 
 import UIKit
 import SnapKit
-import WebKit
 
 final class OrderProgressVC: UIViewController {
 
@@ -17,7 +16,7 @@ final class OrderProgressVC: UIViewController {
         label.textAlignment = .left
         label.textColor = .black
         label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 25)
-        label.text = "Приняли"
+        label.text = "Готовим"
         
         return label
     }()
@@ -28,7 +27,6 @@ final class OrderProgressVC: UIViewController {
         progressView.progressViewStyle = .default
         progressView.setProgress(0.0, animated: false)
         progressView.progressTintColor = UIColor.tabBarItemAccent
-//        progressView.trackTintColor =
         
         return progressView
     }()
@@ -54,21 +52,21 @@ final class OrderProgressVC: UIViewController {
         return label
     }()
     
-//    lazy var playerWebView: WKWebView = {
-//        let webView = WKWebView()
-//
-//        webView.navigationDelegate = self
-//
-//        return webView
-//    }()
+    private lazy var exitButton: UIButton = {
+        let button = UIButton()
+        
+        button.setTitle("Закрыть", for: .normal)
+        button.isHidden = true
+        button.tintColor = .white
+        button.backgroundColor = #colorLiteral(red: 1, green: 0.4541721344, blue: 0.01430354454, alpha: 1)
+        button.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
+        
+        return button
+    }()
     
-//    private let activeIndicator = UIActivityIndicatorView(style: .large)
-//
-//    private let timer = Timer.scheduledTimer(timeInterval: 1.0, target: OrderProgressVC.self, selector: #selector(runTimer), userInfo: nil, repeats: false)
-    
-    private let typingstring = "Оцените заказ"
+    private let typingstring = "Приятного аппетита"
     private var seconds = 59
-    private var minutes = 2
+    private var minutes = 14
     
     //MARK: - LifeCycle
     override func viewDidLoad() {
@@ -77,18 +75,46 @@ final class OrderProgressVC: UIViewController {
         setupViews()
 
         createDisplayLink()
-//        startPlayer()
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        exitButton.layer.cornerRadius = exitButton.bounds.height / 2
+    }
+        
+    //MARK: - Actions
+    @objc private func runTimer(displayLink: CADisplayLink) {
+        seconds -= 1
+        progressView.setProgress(progressView.progress + 0.00114, animated: true)
+        
+        if seconds == 0 {
+            if minutes == 0 {
+                titleLabel.animateViewPress()
+                titleLabel.text = "Поддано"
+                displayLink.invalidate()
+                timerLabel.text = "\(minutes) : \(seconds)"
+                typingText()
+                exitButton.isHidden = false
+                exitButton.animateViewPress()
+            } else {
+                minutes -= 1
+                seconds = 59
+            }
+        }
+        timerLabel.text = "\(minutes) : \(seconds)"
+    }
+    
+    @objc private func exitButtonTapped() {
+        dismiss(animated: true)
     }
     
     private func createDisplayLink() {
         let displayLink = CADisplayLink(target: self, selector: #selector(runTimer))
         displayLink.add(to: .current, forMode: .default)
-        displayLink.preferredFramesPerSecond = 10
+        displayLink.preferredFramesPerSecond = 50
     }
     
-    //MARK: - Actions
     private func typingText() {
-
         guard var text = typingLabel.text else { return }
 
         for char in typingstring {
@@ -96,27 +122,6 @@ final class OrderProgressVC: UIViewController {
             typingLabel.text = text
             RunLoop.current.run(until: Date() + 0.15)
         }
-    }
-    
-    @objc private func runTimer(displayLink: CADisplayLink) {
-        seconds -= 1
-        
-        if seconds == 0 {
-            if minutes == 0 {
-                progressView.progress += 0.4
-                titleLabel.text = "Поддано"
-                displayLink.invalidate()
-                timerLabel.text = "\(minutes) : \(seconds)"
-                typingText()
-            } else {
-                titleLabel.text = "Готовим"
-                minutes -= 1
-                seconds = 59
-                progressView.setProgress(progressView.progress + 0.3, animated: true)
-            }
-        }
-        
-        timerLabel.text = "\(minutes) : \(seconds)"
     }
     
     private func setupViews() {
@@ -149,33 +154,12 @@ final class OrderProgressVC: UIViewController {
             make.left.right.equalToSuperview().inset(18)
         }
         
-//        view.addSubview(playerWebView)
-//        playerWebView.snp.makeConstraints { make in
-//            make.top.equalTo(progressView.snp.bottom).offset(20)
-//            make.left.right.equalToSuperview().inset(18)
-//            make.height.equalToSuperview().multipliedBy(0.7)
-//        }
-//
-//        playerWebView.addSubview(activeIndicator)
-//        activeIndicator.snp.makeConstraints { make in
-//            make.center.equalTo(playerWebView.snp.center)
-//        }
-//        activeIndicator.startAnimating()
+        view.addSubview(exitButton)
+        exitButton.snp.makeConstraints { make in
+            make.bottom.equalTo(view.safeAreaLayoutGuide).offset(-20)
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
+            make.height.equalToSuperview().multipliedBy(0.07)
+        }
     }
-    
-//    private func startPlayer() {
-//        guard let url = URL(string: "https://tv.ivideon.com/camera/100-26ee075587d571e9dcf129de58e8cd61/0/?lang=ru") else { return }
-//        let request = URLRequest(url: url)
-//        playerWebView.load(request)
-////        let queue = DispatchQueue.global(qos: .default)
-////        queue.async {
-////            self.playerWebView.load(request)
-////        }
-//    }
 }
-
-//extension OrderProgressVC: WKNavigationDelegate {
-//    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//        activeIndicator.stopAnimating()
-//    }
-//}

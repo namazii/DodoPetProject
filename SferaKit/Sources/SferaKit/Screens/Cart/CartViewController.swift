@@ -22,7 +22,6 @@ protocol CartViewOutputProtocol {
 final class CartViewController: UIViewController, ScreenRoutable {
     
     var presenter: CartViewOutputProtocol?
-    
     var tableAdapter: CartTableAdapter
     
     init(tableAdapter: CartTableAdapter) {
@@ -108,7 +107,6 @@ final class CartViewController: UIViewController, ScreenRoutable {
             make.height.equalToSuperview().multipliedBy(0.1)
         }
 
-        
         backgroundButtonView.addSubview(orderButton)
         orderButton.snp.makeConstraints { make in
             make.left.right.equalTo(backgroundButtonView).inset(20)
@@ -128,6 +126,21 @@ extension CartViewController: CartViewInputProtocol {
     }
     
     func getTotalPrice(price: String) {
-        orderButton.setTitle(price, for: .normal)
+        let animation = CAKeyframeAnimation()
+        animation.keyPath = "position.x"
+        animation.values = [0, 10, -10, 10, 0]
+        animation.keyTimes = [0, 0.16, 0.5, 0.83, 1]
+        animation.duration = 0.4
+
+        animation.isAdditive = true
+        orderButton.layer.add(animation, forKey: "shake")
+        
+        if price == "0" {
+            orderButton.isEnabled = false
+            orderButton.setTitle("Добавьте продукты из меню", for: .normal)
+        } else {
+            orderButton.isEnabled = true
+            orderButton.setTitle("Оформить заказ на \(price) р", for: .normal)
+        }
     }
 }

@@ -17,7 +17,6 @@ final class BannersSkeletonCell: UICollectionViewCell {
     private let imageView: UIImageView = {
         let image = UIImageView()
         
-        
         return image
     }()
     

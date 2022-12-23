@@ -46,8 +46,8 @@ final class ProductInfoCell: UITableViewCell {
     }
     
     override func layoutSubviews() {
-        nameLabel.font = .systemFont(ofSize: contentView.frame.height / 3)
-        infoLabel.font = .systemFont(ofSize: contentView.frame.height / 5)
+        nameLabel.font = .systemFont(ofSize: contentView.frame.height / 2.5)
+        infoLabel.font = .systemFont(ofSize: contentView.frame.height / 3.5)
     }
     
     required init?(coder: NSCoder) {
@@ -64,14 +64,16 @@ final class ProductInfoCell: UITableViewCell {
     private func setupViews() {
         contentView.addSubview(nameLabel)
         nameLabel.snp.makeConstraints { make in
-            make.top.left.right.equalToSuperview()
+            make.top.equalToSuperview()
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
         }
         
         contentView.addSubview(infoLabel)
         infoLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom)
-            make.left.right.bottom.equalToSuperview()
-            make.height.equalToSuperview().multipliedBy(0.6)
+            make.top.equalTo(nameLabel.snp.bottom).offset(10)
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
         }
     }
 }

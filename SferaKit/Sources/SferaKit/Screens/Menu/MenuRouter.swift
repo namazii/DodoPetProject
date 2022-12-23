@@ -9,6 +9,7 @@ import UIKit
 
 protocol MenuRouterInputProtocol {
     func showProductDetail(product: Product)
+    
 }
 
 protocol MenuRouterOutputProtocol {
@@ -24,6 +25,4 @@ final class MenuRouter: MenuRouterInputProtocol {
         
         view?.presentScreen(vc, animated: true, completion: nil)
     }
-    
-    
 }

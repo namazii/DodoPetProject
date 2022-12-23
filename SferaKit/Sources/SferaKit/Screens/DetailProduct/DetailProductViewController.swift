@@ -88,7 +88,7 @@ final class DetailProductViewController: UIViewController, ScreenRoutable {
     //MARK: - Actions
     @objc private func addOrder() {
         presenter?.addToCart()
-        presentingViewController?.dismiss(animated: true)
+        dismissView(animated: true, completion: nil)
     }
     
     //MARK: - Private Methods
@@ -119,7 +119,7 @@ final class DetailProductViewController: UIViewController, ScreenRoutable {
 //MARK: - DetailProductViewInputProtocol
 extension DetailProductViewController: DetailProductViewInputProtocol {
     func priceСalculation(_ product: Product) {
-        orderButton.setTitle("В корзину за \(product.price)$", for: .normal)
+        orderButton.setTitle("В корзину за \(product.price) р", for: .normal)
     }
     
     func updateProduct(_ produc: Product?) {
