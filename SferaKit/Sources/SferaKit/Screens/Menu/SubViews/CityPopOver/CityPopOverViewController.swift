@@ -8,36 +8,23 @@
 import UIKit
 import SnapKit
 
-protocol CityPopOverViewInputProtocol: AnyObject {
-    func updateCities(_ cities: [String])
+protocol CityPopOverViewOutputProtocol: AnyObject {
+    func selectedСity(_ string: String)
 }
 
-protocol CityPopOverViewOutputProtocol {
-    func loadView()
-}
-
-final class CityPopOverViewController: UIViewController, ScreenRoutable {
+final class CityPopOverViewController: UIViewController {
     
-    var presenter: CityPopOverViewOutputProtocol?
+    weak var delegate: CityPopOverViewOutputProtocol?
     
-    var tableAdapter: CityPopOverTableAdapter
-    
-    init(tableAdapter: CityPopOverTableAdapter) {
-        self.tableAdapter = tableAdapter
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private var cities = ["Москва", "Санкт-Петербург", "Новосибирск", "Екатеринбург", "Казань", "Самара", "Омск"]
     
     //MARK: - Private Properties
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         
         tableView.register(CityPopOverCell.self, forCellReuseIdentifier: CityPopOverCell.reuseID)
-        tableView.dataSource = tableAdapter
-        tableView.delegate = tableAdapter
+        tableView.dataSource = self
+        tableView.delegate = self
         tableView.separatorStyle = .none
         
         return tableView
@@ -47,10 +34,7 @@ final class CityPopOverViewController: UIViewController, ScreenRoutable {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        presenter?.loadView()
-        
         setupViews()
-        tableView.reloadData()
     }
     
     //MARK: - Private Methods
@@ -64,9 +48,21 @@ final class CityPopOverViewController: UIViewController, ScreenRoutable {
     }
 }
 
-//MARK: - CityPopOverViewInputProtocol
-extension CityPopOverViewController: CityPopOverViewInputProtocol {
-    func updateCities(_ cities: [String]) {
-        tableAdapter.cities = cities
+extension CityPopOverViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        delegate?.selectedСity(cities[indexPath.row])
+        presentingViewController?.dismiss(animated: true)
+    }
+}
+
+extension CityPopOverViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return cities.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: CityPopOverCell.reuseID, for: indexPath) as? CityPopOverCell else { return UITableViewCell() }
+        cell.configure(city: cities[indexPath.row])
+        return cell
     }
 }

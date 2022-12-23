@@ -25,6 +25,7 @@ final class CategoriesView: UITableViewHeaderFooterView {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
         
+        collectionView.allowsSelection = false
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: CategoryCell.reuseID)
@@ -83,6 +84,7 @@ final class CategoriesView: UITableViewHeaderFooterView {
 extension CategoriesView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if loaded {
+            collectionView.allowsSelection = true
             return categories.count
         } else {
             return 4

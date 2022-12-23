@@ -109,7 +109,7 @@ class MenuSkeletonCell: UITableViewCell {
         }
         
         infoLabel.snp.makeConstraints { make in
-            make.height.equalTo(contentView.snp.height).multipliedBy(0.46)
+            make.height.equalTo(contentView.snp.height).multipliedBy(0.4)
             make.width.equalTo(contentView.snp.width).multipliedBy(0.5)
         }
         

@@ -11,7 +11,7 @@ protocol ProductsAPIInputProtocol {
     func fetchCollection(completion: @escaping(ProductsResponse) -> Void)
 }
 
-class ProductsAPI: ProductsAPIInputProtocol {
+final class ProductsAPI: ProductsAPIInputProtocol {
     
     func fetchCollection(completion: @escaping(ProductsResponse) -> Void) {
         

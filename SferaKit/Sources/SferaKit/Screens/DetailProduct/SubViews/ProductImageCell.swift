@@ -35,7 +35,8 @@ final class ProductImageCell: UITableViewCell {
     private func setupViews() {
         contentView.addSubview(productImage)
         productImage.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.left.top.equalToSuperview().offset(20)
+            make.bottom.right.equalToSuperview().offset(-20)
         }
     }
     

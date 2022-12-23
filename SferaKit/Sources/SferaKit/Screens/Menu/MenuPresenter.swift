@@ -21,10 +21,6 @@ final class MenuPresenter: MenuViewOutputProtocol {
         self.router = router
     }
     
-//    func cityButtonTapped() {
-//        print("tap")
-//    }
-    
     func fetchCategories() {
         var category: Set<String> = []
         for product in products {

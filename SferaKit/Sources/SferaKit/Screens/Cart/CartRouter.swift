@@ -23,6 +23,6 @@ final class CartRouter: CartRouterInputProtocol {
         
         let vc = OrderProgressVC()
         let nav = UINavigationController(rootViewController: vc)
-        view?.presentScreen(nav, animated: true, completion: nil)
+        view?.push(nav, animated: true, completion: nil)
     }
 }

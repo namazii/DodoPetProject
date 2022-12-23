@@ -27,7 +27,6 @@ final class ProductCell: UITableViewCell {
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
         label.textAlignment = .center
-        label.font = .systemFont(ofSize: 20)
         label.text = "Ветчина и грибы"
         
         return label
@@ -41,7 +40,6 @@ final class ProductCell: UITableViewCell {
         label.textAlignment = .natural
         label.textColor = .gray
         label.sizeToFit()
-        label.font = .systemFont(ofSize: 14)
         label.text = "Ветчина,шампиньоны, увеличинная порция моцареллы, томатный соус"
         
         return label
@@ -83,7 +81,7 @@ final class ProductCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         headLabel.font = .systemFont(ofSize: contentView.frame.height / 8.4)
-        infoLabel.font = .systemFont(ofSize: contentView.frame.height / 11)
+        infoLabel.font = .systemFont(ofSize: contentView.frame.height / 10)
         priceButton.layer.cornerRadius = priceButton.frame.height / 2
     }
     
@@ -91,7 +89,7 @@ final class ProductCell: UITableViewCell {
     func configure(model: Product) {
         headLabel.text = model.name
         infoLabel.text = model.itemDescription
-        priceButton.setTitle("   От \(model.price)   ", for: .normal)
+        priceButton.setTitle(" \(model.price) р", for: .normal)
         productImageView.image = UIImage(named: model.image, in: .module, with: nil)
     }
     
@@ -117,7 +115,8 @@ final class ProductCell: UITableViewCell {
         }
         
         priceButton.snp.makeConstraints { make in
-            make.height.equalTo(stackViewMain.snp.height).multipliedBy(0.2)
+            make.height.equalTo(stackViewMain.snp.height).multipliedBy(0.22)
+            make.width.equalTo(stackViewMain.snp.width).multipliedBy(0.5)
         }
         
         headLabel.snp.makeConstraints { make in

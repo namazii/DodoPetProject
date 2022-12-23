@@ -59,13 +59,18 @@ extension MenuTableAdapter: UITableViewDataSource {
         
         if loaded {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ProductCell.reuseID, for: indexPath) as? ProductCell else { return UITableViewCell() }
+            
             let product = items[indexPath.row]
             cell.configure(model: product)
+            cell.selectionStyle = .none
             
             return cell
             
         } else {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: MenuSkeletonCell.reuseID, for: indexPath) as? MenuSkeletonCell else { return  UITableViewCell() }
+            
+            cell.selectionStyle = .none
+            
             return cell
         }
     }

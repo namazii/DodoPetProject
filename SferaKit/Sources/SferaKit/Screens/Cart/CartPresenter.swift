@@ -30,6 +30,7 @@ final class CartPresenter: CartViewOutputProtocol {
     //MARK: - Methods    
     func didTapOrderButton() {
         router?.showOrderProgress()
+        interactor?.updateCart([])
     }
     
     func getCart() {

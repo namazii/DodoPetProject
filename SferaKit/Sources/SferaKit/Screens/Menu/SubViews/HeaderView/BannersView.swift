@@ -17,6 +17,7 @@ final class BannersView: UIView {
     private lazy var collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: createCompositionalLayout())
         
+        collectionView.allowsSelection = false
         collectionView.dataSource = self
         collectionView.register(BannersCell.self, forCellWithReuseIdentifier: BannersCell.reuseID)
         collectionView.register(BannersSkeletonCell.self, forCellWithReuseIdentifier: BannersSkeletonCell.reuseID)
