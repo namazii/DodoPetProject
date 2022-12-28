@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 //MARK: - CategoriesViewDelegate
 protocol CategoriesViewDelegate: AnyObject {

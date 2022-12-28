@@ -5,8 +5,6 @@
 //  Created by Назар Ткаченко on 27.11.2022.
 //
 
-import Foundation
-
 protocol DetailProductAssemblyInputProtocol {
     func configure(with product: Product) -> DetailProductViewController
 }

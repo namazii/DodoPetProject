@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SnapKit
 
-class MenuSkeletonCell: UITableViewCell {
+final class MenuSkeletonCell: UITableViewCell {
     
     static let reuseID = "MenuSkeletonCell"
     

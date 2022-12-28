@@ -41,13 +41,16 @@ final class MenuPresenter: MenuViewOutputProtocol {
 extension MenuPresenter: MenuInteractorOutputProtocol {    
     func fetchedProducts(_ data: ProductsResponse) {
         
-        let productsItems = data.items.sorted(by: { first, second in
-            return first.category > second.category
-        })
-        
-        products = productsItems
-        view?.updateBanners(data.banners)
-        view?.updateProducts(productsItems)
+        DispatchQueue.main.async { [weak self] in
+            
+            let productsItems = data.items.sorted(by: { first, second in
+                return first.category > second.category
+            })
+            
+            self?.products = productsItems
+            self?.view?.updateBanners(data.banners)
+            self?.view?.updateProducts(productsItems)
+        }
     }
 }
 

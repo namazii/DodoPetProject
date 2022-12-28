@@ -5,8 +5,6 @@
 //  Created by Назар Ткаченко on 27.11.2022.
 //
 
-import Foundation
-
 protocol MenuInteractorInputProtocol {
     func fetchProducts()
     func loadProducts()
@@ -35,8 +33,13 @@ final class MenuInteractor: MenuInteractorInputProtocol {
     
     //MARK: - Requests
     func fetchProducts() {
-        productsAPI?.fetchCollection() { [weak self] result in
-            self?.presenter?.fetchedProducts(result)
+        Task {
+            do {
+                guard let response = try await productsAPI?.fetchCollection() else { return }
+                presenter?.fetchedProducts(response)
+            } catch {
+                print(error)
+            }
         }
     }
 }
