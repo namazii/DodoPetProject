@@ -5,8 +5,6 @@
 //  Created by Назар Ткаченко on 27.11.2022.
 //
 
-import Foundation
-
 protocol CartInteractorInputProtocol {
     func loadCart() -> [Product]
     func updateCart(_ products: [Product])
