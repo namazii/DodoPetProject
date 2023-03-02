@@ -13,11 +13,6 @@
 
 Copy of dodopisa
 
-## Video
-
-https://user-images.githubusercontent.com/97259944/209322212-550ba717-e081-4ffd-a9de-f7d0c44a15d3.mov
-
-
 ## Developers
 
 - [Nazar](https://github.com/namazii)
