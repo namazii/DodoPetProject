@@ -5,7 +5,7 @@
 //  Created by Назар Ткаченко on 19.12.2022.
 //
 
-@testable import SferaKit
+@testable import DodoKit
 
 struct Seeds {
     

@@ -31,10 +31,11 @@ final class OrderProgressVC: UIViewController {
         return progressView
     }()
     
-    private let timerLabel: UILabel = {
+    private let infoLabel: UILabel = {
         let label = UILabel(frame: .zero)
         
         label.textAlignment = .center
+        label.lineBreakMode = .byWordWrapping
         label.textColor = .black
         label.font = UIFont(name: "AppleSDGothicNeo-Bold", size: 40)
         
@@ -94,7 +95,8 @@ final class OrderProgressVC: UIViewController {
                 titleLabel.animateViewPress()
                 titleLabel.text = "Поддано"
                 displayLink.invalidate()
-                timerLabel.text = "\(minutes) : \(seconds)"
+                infoLabel.text = "Заберите заказ"
+                infoLabel.animateViewPress()
                 typingText()
                 exitButton.isHidden = false
                 exitButton.animateViewPress()
@@ -103,7 +105,6 @@ final class OrderProgressVC: UIViewController {
                 seconds = 59
             }
         }
-        timerLabel.text = "\(minutes) : \(seconds)"
     }
     
     @objc private func exitButtonTapped() {
@@ -129,13 +130,13 @@ final class OrderProgressVC: UIViewController {
     private func setupView() {
         view.backgroundColor = .systemBackground
         title = "Заказ №42 в 14:02"
-        timerLabel.text = "\(minutes) : \(seconds)"
+        infoLabel.text = "Заказ принят"
     }
     
     private func addSubviews() {
         view.addSubview(titleLabel)
         view.addSubview(progressView)
-        view.addSubview(timerLabel)
+        view.addSubview(infoLabel)
         view.addSubview(typingLabel)
         view.addSubview(exitButton)
     }
@@ -163,13 +164,13 @@ extension OrderProgressVC {
             make.leading.trailing.equalToSuperview().inset(Appearance.leftPadding)
         }
         
-        timerLabel.snp.makeConstraints { make in
+        infoLabel.snp.makeConstraints { make in
             make.top.equalTo(progressView.snp.bottom).offset(Appearance.timerLabelTopPadding)
             make.leading.trailing.equalToSuperview().inset(Appearance.leftPadding)
         }
         
         typingLabel.snp.makeConstraints { make in
-            make.top.equalTo(timerLabel.snp.bottom).offset(Appearance.topPadding)
+            make.top.equalTo(infoLabel.snp.bottom).offset(Appearance.topPadding)
             make.leading.trailing.equalToSuperview().inset(Appearance.leftPadding)
         }
         

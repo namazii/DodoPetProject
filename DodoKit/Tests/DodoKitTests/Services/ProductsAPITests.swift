@@ -6,7 +6,7 @@
 //
 
 import XCTest
-@testable import SferaKit
+@testable import DodoKit
 
 final class ProductsAPITests: XCTestCase {
     

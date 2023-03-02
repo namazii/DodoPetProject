@@ -6,28 +6,27 @@
 //
 
 import XCTest
-@testable import SferaKit
+@testable import DodoKit
 
 final class MenuInteractorTests: XCTestCase {
     
     func testFetchProductsServiceCalls() {
-        let productResponse = Seeds.response
-        let productsAPISpy = ProductsAPISpy(response: productResponse)
-        let sut = MenuInteractor(presenter: MenuPresenterSpy(), apiService: productsAPISpy, cartService: CartService())
+        let productsAPISpy = ProductsAPISpy()
+        let sut = MenuInteractor(apiService:  productsAPISpy)
         
         sut.fetchProducts()
-        
+        sleep(1)
+
         XCTAssert(productsAPISpy.fetchCollectionCalled, "fetchProducts() should ask the productsAPISpy to fetch response")
     }
     
     func testLoadProductsServiceCalls() {
-        let productResponse = Seeds.response
-        let productsAPISpy = ProductsAPISpy(response: productResponse)
+        let productsAPISpy = ProductsAPISpy()
         let cartServiceSpy = CartServiceSpy()
-        let sut = MenuInteractor(presenter: MenuPresenterSpy(), apiService: productsAPISpy, cartService: cartServiceSpy)
-        
-        sut.loadProducts()
-        
+        let sut = MenuInteractor(apiService: productsAPISpy, cartService: cartServiceSpy)
+
+        sut.loadProducts()        
+
         XCTAssert(cartServiceSpy.loadProductsCalled, "loadProducts() should ask the cartServiceSpy to fetch response")
     }
 }
