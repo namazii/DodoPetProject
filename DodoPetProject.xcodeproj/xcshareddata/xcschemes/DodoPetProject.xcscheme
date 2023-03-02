@@ -32,10 +32,10 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "SferaKitTests"
-               BuildableName = "SferaKitTests"
-               BlueprintName = "SferaKitTests"
-               ReferencedContainer = "container:SferaKit">
+               BlueprintIdentifier = "DodoKitTests"
+               BuildableName = "DodoKitTests"
+               BlueprintName = "DodoKitTests"
+               ReferencedContainer = "container:DodoKit">
             </BuildableReference>
          </TestableReference>
       </Testables>
