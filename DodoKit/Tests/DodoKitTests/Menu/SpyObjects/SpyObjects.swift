@@ -5,7 +5,7 @@
 //  Created by Назар Ткаченко on 19.12.2022.
 //
 
-@testable import SferaKit
+@testable import DodoKit
 import UIKit
 
 //MARK: - MenuPresenterSpy
@@ -42,20 +42,12 @@ class MenuPresenterSpy: MenuInteractorOutputProtocol, MenuViewOutputProtocol, Me
 
 //MARK: - ProductsAPISpy
 class ProductsAPISpy: ProductsAPIInputProtocol {
-    func fetchCollection() async throws -> ProductsResponse {
-        return ProductsResponse(items: [], categories: [], banners: [])
-    }
-    
-    var response: ProductsResponse
-    
-    init(response: ProductsResponse) {
-        self.response = response
-    }
-    
     var fetchCollectionCalled = false
-    func fetchCollection(completion: @escaping (ProductsResponse) -> Void) {
+    
+    @discardableResult
+    func fetchCollection() async throws -> ProductsResponse {
         fetchCollectionCalled = true
-        completion(response)
+        return ProductsResponse(items: [], categories: [], banners: [])
     }
 }
 
@@ -92,6 +84,7 @@ class CartServiceSpy: CartServiceInputProtocol {
 }
 
 //MARK: - MenuViewSpy
+
 class MenuViewSpy: MenuViewInputProtocol {
     var updateBannersCalled = false
     func updateBanners(_ banners: [String]) {
@@ -99,7 +92,7 @@ class MenuViewSpy: MenuViewInputProtocol {
     }
     
     var updateProductsCalled = false
-    func updateProducts(_ products: [SferaKit.Product]) {
+    func updateProducts(_ products: [DodoKit.Product]) {
         updateProductsCalled = true
     }
     
@@ -111,12 +104,13 @@ class MenuViewSpy: MenuViewInputProtocol {
             updateCategoriesItems = categories
         }
     }
+    
 }
 
 //MARK: - MenuRouterSpy
 class MenuRouterSpy: MenuRouterInputProtocol {
     var showProductDetailCalled = false
-    func showProductDetail(product: SferaKit.Product) {
+    func showProductDetail(product: DodoKit.Product) {
         showProductDetailCalled = true
     }
 }

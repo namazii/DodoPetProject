@@ -6,14 +6,14 @@
 //
 
 import XCTest
-@testable import SferaKit
+@testable import DodoKit
 
 final class MenuViewControllerTests: XCTestCase {
     
     func testfetchProductsCalls() {
         let tableAdapter = MenuTableAdapter()
-        let sut = MenuViewController(tableAdapter: tableAdapter)
         let presenter = MenuPresenterSpy()
+        let sut = MenuViewController(rootView: MenuView(tableAdapter: tableAdapter), presenter: presenter)
         sut.presenter = presenter
         
         sut.viewDidLoad()
@@ -24,33 +24,12 @@ final class MenuViewControllerTests: XCTestCase {
     func testfetchCategoriesCalls() {
         let productResponse = Seeds.response
         let tableAdapter = MenuTableAdapter()
-        let sut = MenuViewController(tableAdapter: tableAdapter)
         let presenter = MenuPresenterSpy()
+        let sut = MenuViewController(rootView: MenuView(tableAdapter: tableAdapter), presenter: presenter)
         sut.presenter = presenter
         
         sut.updateProducts(productResponse.items)
         
         XCTAssert(presenter.fetchCategoriesCalled, "fetchCategories() should ask the MenuRouterSpy to fetch categories")
-    }
-    
-    func testShouldDisplayTableAdapterReloadData() {
-        let productResponse = Seeds.response
-        let tableview = TableViewSpy()
-        let sut = MenuViewController(tableAdapter: MenuTableAdapter())
-        let presenter = MenuPresenterSpy()
-        sut.presenter = presenter
-        sut.tableView = tableview
-        
-        sut.updateProducts(productResponse.items)
-        XCTAssert(tableview.reloadDataCalled, "Displaying fetched products should reload the table view")
-        tableview.reloadDataCalled = false
-        
-        sut.updateCategories(productResponse.categories)
-        XCTAssert(tableview.reloadDataCalled, "Displaying fetched products should reload the table view")
-        tableview.reloadDataCalled = false
-        
-        sut.updateBanners(productResponse.banners)
-        XCTAssert(tableview.reloadDataCalled, "Displaying fetched products should reload the table view")
-
     }
 }

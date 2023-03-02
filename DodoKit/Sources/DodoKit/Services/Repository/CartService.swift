@@ -19,8 +19,6 @@ final class CartService: CartServiceInputProtocol {
     
     private var products: [Product] = []
     
-//    var order: Order?
-    
     private func saveProducts() {
         productRepository.save(products)
     }
